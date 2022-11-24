@@ -33,6 +33,10 @@ export const RegisterPage = observer(() => {
       <p>Loading...</p>
     )
   }
+
+  if (userStore.authenticated) {
+    navigate('/home')
+  }
   
   if (userStore.hasErrors) {
     return (

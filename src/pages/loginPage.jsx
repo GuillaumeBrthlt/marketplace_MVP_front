@@ -2,12 +2,13 @@ import React from 'react'
 import { useState } from 'react'
 import { useUserStore } from '../contexts/UserContext'
 import { observer } from 'mobx-react-lite'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export const LoginPage = observer(() => {
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
   const userStore = useUserStore()
+  const navigate = useNavigate()
   
   function handleLogin () {
     const loginData = {
@@ -17,6 +18,10 @@ export const LoginPage = observer(() => {
       }
     };
     userStore.loginUser(loginData)
+  }
+
+  if (userStore.authenticated) {
+    navigate('/home')
   }
 
   if (userStore.loading) {

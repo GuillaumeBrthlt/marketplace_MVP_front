@@ -6,6 +6,10 @@ import {LoginPage} from "./pages/loginPage";
 import {RegisterPage} from "./pages/registerPage";
 import ResetPasswordPage from "./pages/resetPasswordPage";
 import NewPasswordPage from "./pages/newPasswordPage";
+import HomePage from "./pages/homePage";
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from './theme';
 
 
 export const App = observer(() => {
@@ -22,16 +26,20 @@ export const App = observer(() => {
   }
 
   return (
-    <Router>
-      <Nav />
-      <main>
-        <Routes>
-          <Route path="/login" element={<LoginPage />}/>
-          <Route path="/register" element={<RegisterPage />}/>
-          <Route path="/resetpassword" element={<ResetPasswordPage />}/>
-          <Route path="/new_password" element={<NewPasswordPage />}/>
-        </Routes>
-      </main>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Nav />
+        <main>
+          <Routes>
+            <Route path="/home" element={<HomePage />}/>
+            <Route path="/login" element={<LoginPage />}/>
+            <Route path="/register" element={<RegisterPage />}/>
+            <Route path="/resetpassword" element={<ResetPasswordPage />}/>
+            <Route path="/new_password" element={<NewPasswordPage />}/>
+          </Routes>
+        </main>
+      </Router>
+    </ThemeProvider>
   )
 })
