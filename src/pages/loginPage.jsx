@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useUserStore } from '../contexts/UserContext'
 import { observer } from 'mobx-react-lite'
+import { Link } from 'react-router-dom'
 
 export const LoginPage = observer(() => {
   const [email, setEmail] = useState(null)
@@ -33,6 +34,7 @@ export const LoginPage = observer(() => {
         <button type='submit' onClick={handleLogin}>
           Se connecter
         </button>
+        <Link to="/resetpassword">forgotten password</Link>
       </div>
     )
   }
@@ -45,6 +47,7 @@ export const LoginPage = observer(() => {
         <button type='submit' onClick={handleLogin}>
           Se connecter
         </button>
+        <Link to="/resetpassword">forgotten password</Link>
       </div>
     )
   }

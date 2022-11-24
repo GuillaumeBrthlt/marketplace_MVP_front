@@ -1,10 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { useUserStore } from "./contexts/UserContext";
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Nav from "./components/Nav";
 import {LoginPage} from "./pages/loginPage";
 import {RegisterPage} from "./pages/registerPage";
+import ResetPasswordPage from "./pages/resetPasswordPage";
+import NewPasswordPage from "./pages/newPasswordPage";
 
 
 export const App = observer(() => {
@@ -27,6 +28,8 @@ export const App = observer(() => {
         <Routes>
           <Route path="/login" element={<LoginPage />}/>
           <Route path="/register" element={<RegisterPage />}/>
+          <Route path="/resetpassword" element={<ResetPasswordPage />}/>
+          <Route path="/new_password" element={<NewPasswordPage />}/>
         </Routes>
       </main>
     </Router>

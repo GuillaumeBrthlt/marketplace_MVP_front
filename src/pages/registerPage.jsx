@@ -14,7 +14,8 @@ export const RegisterPage = observer(() => {
       const registerData = {
         "user": {
           "email": email,
-          "password": password
+          "password": password,
+          "password_confirmation": passwordConfirmation
         }
       };
       userStore.register(registerData)
