@@ -24,7 +24,7 @@ export function createUserStore() {
       
       try {
         let response = await axios.post(`${BASE_URL}users`, payload);
-        if (response.statusText === "OK") {
+        if (response.data.user) {
           runInAction (() => {
             this.loading = false
             this.authenticated = true
@@ -34,7 +34,7 @@ export function createUserStore() {
             localStorage.setItem('auth_token', this.auth_token)
           })
         } else {
-          throw new Error(response.statusText)
+          throw new Error('invalid password or email')
         }  
       } catch (error) {
         runInAction (() => {
@@ -52,8 +52,7 @@ export function createUserStore() {
 
       try {
         let response = await axios.post(`${BASE_URL}users/sign_in`, payload);
-        console.log(response)
-        if (response.statusText === "OK") {
+        if (response.data.user) {
           runInAction (() => {
             this.loading = false
             this.authenticated = true
@@ -63,7 +62,7 @@ export function createUserStore() {
             localStorage.setItem('auth_token', this.auth_token)
           })
         } else {
-          throw new Error(response.statusText)
+          throw new Error('invalid password or email')
         }  
       } catch (error) {
         runInAction (() => {
@@ -91,6 +90,7 @@ export function createUserStore() {
           this.auth_token = null;
           this.authenticated = false;
           localStorage.removeItem("auth_token");
+          axios.defaults.headers.common["Authorization"] = null;
         })
       } catch(error) {
         console.error(error)
@@ -116,7 +116,7 @@ export function createUserStore() {
             this.authenticated = true
             this.user = response.data.user;
             this.auth_token = localStorage.getItem('auth_token');
-            axios.defaults.headers.common["Authorization"] = null;
+            axios.defaults.headers.common["Authorization"] = this.auth_token
           })
         } else {
           throw new Error(response.statusText)
