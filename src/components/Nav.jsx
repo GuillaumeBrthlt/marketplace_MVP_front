@@ -6,7 +6,7 @@ import Toolbar from './toolBar'
 import Box from '@mui/material/Box';
 import {Link} from 'react-router-dom'
 import { Typography } from '@mui/material'
-
+import {useNavigate} from 'react-router-dom'
 
 const rightLink = {
   fontSize: 16,
@@ -17,9 +17,11 @@ const rightLink = {
 
 const Nav = observer(() => {
   const userStore = useUserStore()
+  const navigate = useNavigate()
 
   const Logout = () => {
     userStore.logoutUser()
+    navigate('/')
   }
 
   if (userStore.authenticated) {
@@ -28,22 +30,33 @@ const Nav = observer(() => {
         <AppBar position="fixed">
           <Toolbar sx={{ justifyContent: 'space-between' }}>
             <Box sx={{ flex: 1 }} />
-            <Typography
-              variant="h6"
-              underline="none"
-              color="inherit"
-              to="/"
-              sx={{ fontSize: 24 }}
-            >
-              RealImmo
-            </Typography>
+            <Link style={{textDecoration: 'none', color: 'white'}} to='/'>
+              <Typography
+                variant="h6"
+                underline="none"
+                color="inherit"
+                to="/"
+                sx={{ fontSize: 24 }}
+              >
+                Real Immo
+              </Typography>
+            </Link>
             <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+            <Link style={{textDecoration: 'none'}} to='/dashboard'>
+                <Typography
+                  color="inherit"
+                  variant="h6"
+                  sx={rightLink}
+                >
+                  Mon espace
+                </Typography>
+              </Link>
               <Typography
                 variant="h6"
                 sx={{ ...rightLink, color: 'secondary.main', cursor: 'pointer' }}
                 onClick={Logout}
               >
-                Se déconnecter
+                Deconnexion
               </Typography>
             </Box>
           </Toolbar>
@@ -59,15 +72,17 @@ const Nav = observer(() => {
         <AppBar position="fixed">
           <Toolbar sx={{ justifyContent: 'space-between' }}>
             <Box sx={{ flex: 1 }} />
-            <Typography
-              variant="h6"
-              underline="none"
-              color="inherit"
-              href="/premium-themes/onepirate/"
-              sx={{ fontSize: 24 }}
-            >
-              Real Immo
-            </Typography>
+            <Link style={{textDecoration: 'none', color: 'white'}} to='/'>
+              <Typography
+                variant="h6"
+                underline="none"
+                color="inherit"
+                href="/premium-themes/onepirate/"
+                sx={{ fontSize: 24 }}
+              >
+                Real Immo
+              </Typography>
+            </Link>
             <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
               <Link style={{textDecoration: 'none'}} to='/login'>
                 <Typography
@@ -75,7 +90,7 @@ const Nav = observer(() => {
                   variant="h6"
                   sx={rightLink}
                 >
-                  Sign In
+                  Connexion
                 </Typography>
               </Link>
               <Link style={{textDecoration: 'none'}} to='/register'>
@@ -83,7 +98,7 @@ const Nav = observer(() => {
                   variant="h6"
                   sx={{ ...rightLink, color: 'secondary.main' }}
                 >
-                  Sign Up
+                  Inscription
                 </Typography>
               </Link>
             </Box>

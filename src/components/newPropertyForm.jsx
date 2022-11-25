@@ -1,68 +1,47 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useUserStore } from '../contexts/UserContext'
 import { observer } from 'mobx-react-lite'
-import { Link, useNavigate } from 'react-router-dom'
 import { Field, Form, FormSpy } from 'react-final-form';
 import Box from '@mui/material/Box';
 import Typography from '../components/Typography';
 import AppForm from '../components/appForm';
-import { emailVerif, required } from '../components/form/validation';
+import { required } from '../components/form/validation';
 import RFTextField from '../components/form/RFTextField';
 import FormButton from '../components/form/FormButton';
 import FormFeedback from '../components/form/FormFeedback';
 
-export const LoginPage = observer(() => {
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
-  const userStore = useUserStore()
-  const navigate = useNavigate()
+export const NewPropertyForm = observer(() => {
+  const [title, setTitle] = useState(null)
+  const [price, setPrice] = useState(null)
+  const [description, setDescription] = useState(null)
 
-  useEffect(() => {
-    userStore.authenticated ? navigate('/dashboard') : '';
-  }, [userStore.authenticated])
-  
   const validate = (values) => {
-    const errors = required(['email', 'password'], values);
-
-    if (!errors.email) {
-      const emailError = emailVerif(values.email);
-      if (emailError) {
-        errors.email = emailError;
-      }
-    }
+    const errors = required(['title', 'price', 'description'], values);
     return errors;
   }; 
 
   const handleSubmit = () => {
-    const loginData = {
-      "user": {
-        "email": email,
-        "password": password
-      }
+    const propertyData = {
+      "Title": title,
+      "price": price,
+      "description": description
     };
-    userStore.loginUser(loginData)
+    propertyStore.createProperty(propertyData)
   };
+
+  // useEffect(() => {
+  //   userStore.authenticated ? navigate('/') : '';
+  // }, [userStore.authenticated])
 
   return (
     <React.Fragment>
-      <Typography sx={userStore.hasErrors ? '' : {display: 'none'}}>
-        Email ou mot de passe invalide.
+      <Typography sx={propertyStore.hasErrors ? '' : {display: 'none'}}>
+        Verifiez les informations.
       </Typography>
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
-            Se connecter
-          </Typography>
-          <Typography variant="body2" align="center">
-            {'Pas encore membre ? '}
-            <Link
-              to="/register"
-              align="center"
-              underline="always"
-            >
-              S'inscrire
-            </Link>
+            Ajouter un bien immobilier.
           </Typography>
         </React.Fragment>
         <Form
@@ -72,34 +51,48 @@ export const LoginPage = observer(() => {
         >
           {({ handleSubmit: handleSubmit2, submitting }) => (
             <Box component="form" onSubmit={handleSubmit2} noValidate sx={{ mt: 6 }}>
-              <div type="input" onChange={e => setEmail(e.target.value)}>
+              <div type="input" onChange={e => setTitle(e.target.value)}>
                 <Field
-                  autoComplete="email"
+                  autoComplete="title"
                   autoFocus
                   component={RFTextField}
                   disabled={submitting }
                   fullWidth
-                  label="Email"
+                  label="Title"
                   margin="normal"
-                  name="email"
+                  name="Title"
                   required
                   size="large"
                 />
-              </div>
-              <div type="input" onChange={e => setPassword(e.target.value)}>
+               </div>
+               <div type="input" onChange={e => setPrice(e.target.value)}>
                 <Field
-                  fullWidth
-                  size="large"
+                  autoComplete="price"
+                  autoFocus
                   component={RFTextField}
-                  disabled={submitting}
-                  required
-                  name="password"
-                  autoComplete="current-password"
-                  label="Mot de passe"
-                  type="password"
+                  disabled={submitting }
+                  fullWidth
+                  label="Price"
                   margin="normal"
+                  name="Price"
+                  required
+                  size="large"
                 />
-              </div>
+               </div>
+               <div type="input" onChange={e => setDescription(e.target.value)}>
+                <Field
+                  autoComplete="price"
+                  autoFocus
+                  component={RFTextField}
+                  disabled={submitting }
+                  fullWidth
+                  label="Description"
+                  margin="normal"
+                  name="Description"
+                  required
+                  size="large"
+                />
+               </div>
               <FormSpy subscription={{ submitError: true }}>
                 {({ submitError }) =>
                   submitError ? (
@@ -116,16 +109,11 @@ export const LoginPage = observer(() => {
                 color="secondary"
                 fullWidth
               >
-                {submitting ? 'En cours…' : "Se connecter"}
+                {submitting ? 'En cours…' : "Ajouter"}
               </FormButton>
             </Box>
           )}
         </Form>
-        <Typography align="center">
-          <Link underline="always" to='/resetpassword'>
-            Mot de passe oublié?
-          </Link>
-        </Typography>
       </AppForm>
     </React.Fragment>
   )

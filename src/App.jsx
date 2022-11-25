@@ -10,10 +10,21 @@ import HomePage from "./pages/homePage";
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
-
+import { Navigate } from "react-router-dom";
+import ProfilePage from "./pages/ProfilePage";
+import AppFooter from "./components/AppFooter";
+import {PropertyDetails} from "./pages/propertyDetails";
+import { useEffect } from "react";
+import { usePropertyStore } from "./contexts/PropertyContext";
 
 export const App = observer(() => {
   const userStore = useUserStore()
+  const propertyStore = usePropertyStore()
+
+  useEffect(() => {
+    propertyStore.getProperties()
+    propertyStore.getSellers()
+  }, [])
 
   let localAuthToken = localStorage.auth_token;
   let cookieExists = localAuthToken !== 'undefined' && localAuthToken !== null
@@ -25,6 +36,13 @@ export const App = observer(() => {
     }
   }
 
+  function PrivateRoute({ component: Page }) { 
+    if (!userStore.authenticated) {
+        return <Navigate to="/login"/>
+    }
+    return Page;
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -32,13 +50,16 @@ export const App = observer(() => {
         <Nav />
         <main>
           <Routes>
-            <Route path="/home" element={<HomePage />}/>
+            <Route path="/" element={<HomePage />}/>
             <Route path="/login" element={<LoginPage />}/>
             <Route path="/register" element={<RegisterPage />}/>
             <Route path="/resetpassword" element={<ResetPasswordPage />}/>
             <Route path="/new_password" element={<NewPasswordPage />}/>
+            <Route path="/property/details/:id" element={<PropertyDetails />}/>
+            <Route path="/dashboard" element={<PrivateRoute component={<ProfilePage />}/>}/>
           </Routes>
         </main>
+        <AppFooter />
       </Router>
     </ThemeProvider>
   )
