@@ -9,6 +9,10 @@ import { observer } from 'mobx-react-lite';
 export const PropertiesList = observer(() => {
   const propertyStore = usePropertyStore()
 
+  useEffect(() => {
+    propertyStore.getProperties()
+  }, [])
+
     const displayCards = propertyStore.properties.map((property) =>
       <Grid item xs={2} sm={4} md={4} key={property.id}>
         <PropertyCard property={property} />

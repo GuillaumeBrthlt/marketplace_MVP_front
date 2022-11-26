@@ -21,10 +21,6 @@ export const App = observer(() => {
   const userStore = useUserStore()
   const propertyStore = usePropertyStore()
 
-  useEffect(() => {
-    propertyStore.getProperties()
-    propertyStore.getSellers()
-  }, [])
 
   let localAuthToken = localStorage.auth_token;
   let cookieExists = localAuthToken !== 'undefined' && localAuthToken !== null

@@ -9,10 +9,21 @@ export function createPropertyStore() {
     hasErrors: null,
     properties: [],
     sellers: [],
+    propertyDetails: {
+      id: null,
+      title: null,
+      description: null,
+      user_id: null,
+    },
+    sellerDetails: {
+      id: null,
+      email: null,
+    },
 
     async getProperties() {
       runInAction(() => {
         this.loading = true
+        this.hasErrors = false
       })
       try {
         let response = await axios(`${BASE_URL}properties`)
@@ -31,6 +42,7 @@ export function createPropertyStore() {
     async getSellers() {
       runInAction(() => {
         this.loading = true
+        this.hasErrors = false
       })
       try {
         let response = await axios(`${BASE_URL}members`)
@@ -72,6 +84,46 @@ export function createPropertyStore() {
       } catch (error) {
         runInAction (() => {
           this.loading = false
+          this.hasErrors = true
+        })
+      }
+    },
+
+    async setPropertyDetails(page_id) {
+      runInAction(() => {
+        this.loading = true
+        this.hasErrors = false
+      })
+      try {
+        await this.getProperties()
+        let thisproperty = this.properties.filter(property => property.id == page_id)[0]
+        runInAction(() => {
+          this.loading = false
+          this.propertyDetails = thisproperty
+          })
+      } catch(error) {
+        console.error(error)
+        runInAction(() => {
+          this.hasErrors = true
+        })
+      }
+    },
+
+    async setSellerDetails(user_id) {
+      runInAction(() => {
+        this.loading = true
+        this.hasErrors = false
+      })
+      try {
+        await this.getSellers()
+        let thisseller = this.sellers.filter(seller => seller.id == user_id)[0]
+        runInAction(() => {
+          this.loading = false
+          this.sellerDetails = thisseller
+          })
+      } catch(error) {
+        console.error(error)
+        runInAction(() => {
           this.hasErrors = true
         })
       }
