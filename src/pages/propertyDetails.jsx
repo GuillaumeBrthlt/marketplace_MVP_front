@@ -5,30 +5,29 @@ import { usePropertyStore } from '../contexts/PropertyContext'
 
 export const PropertyDetails = observer(() => {
   const { id } = useParams()
-  const [property, setProperty] = useState(null)
-  const [seller, setSeller] = useState(null)
   const propertyStore = usePropertyStore()
 
   useEffect(() => {
-    let findProperty = propertyStore.properties.filter(property => property.id == id)
-    setProperty(findProperty[0])
+    propertyStore.setPropertyDetails(id) 
   }, [id])
 
   useEffect(() => {
-    if (property) {
-      let findSeller = propertyStore.sellers.filter(seller => property.user_id == seller.id)
-      setSeller(findSeller[0])
+    if(propertyStore.propertyDetails.id) {
+      propertyStore.setSellerDetails(propertyStore.propertyDetails.user_id)
     }
-  }, [property])
+  }, [propertyStore.propertyDetails])
 
-  if (propertyStore.loading || seller == null) {
+  if (propertyStore.sellerDetails.id == null) {
     return (
       <div>Chargement...</div>
     )
-  }
+  } 
 
+  const property = propertyStore.propertyDetails
+  const seller = propertyStore.sellerDetails
+     
   return (
-    <div>Page détails de la propriété <strong>{property.title}</strong> vendu par <strong>{seller.email}</strong></div>
+    <div>Page détails de la propriété <strong>{property.title}</strong> vendu par <strong>{seller.email}</strong> au prix de <strong>{property.price} €</strong></div>
   )
 
 })
