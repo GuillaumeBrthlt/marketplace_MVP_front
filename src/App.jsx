@@ -16,6 +16,7 @@ import AppFooter from "./components/AppFooter";
 import {PropertyDetails} from "./pages/propertyDetails";
 import { useEffect } from "react";
 import { usePropertyStore } from "./contexts/PropertyContext";
+import { Grid } from "@mui/material";
 
 export const App = observer(() => {
   const userStore = useUserStore()
@@ -43,19 +44,23 @@ export const App = observer(() => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Nav />
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage />}/>
-            <Route path="/login" element={<LoginPage />}/>
-            <Route path="/register" element={<RegisterPage />}/>
-            <Route path="/resetpassword" element={<ResetPasswordPage />}/>
-            <Route path="/new_password" element={<NewPasswordPage />}/>
-            <Route path="/property/details/:id" element={<PropertyDetails />}/>
-            <Route path="/dashboard" element={<PrivateRoute component={<ProfilePage />}/>}/>
-          </Routes>
-        </main>
-        <AppFooter />
+        <Grid minHeight="100vh" display="flex" flexDirection="column">
+          <Nav />
+          <Grid flex={1}>
+            <main>
+              <Routes>
+                <Route path="/" element={<HomePage />}/>
+                <Route path="/login" element={<LoginPage />}/>
+                <Route path="/register" element={<RegisterPage />}/>
+                <Route path="/resetpassword" element={<ResetPasswordPage />}/>
+                <Route path="/new_password" element={<NewPasswordPage />}/>
+                <Route path="/property/details/:id" element={<PropertyDetails />}/>
+                <Route path="/dashboard" element={<PrivateRoute component={<ProfilePage />}/>}/>
+              </Routes>
+            </main>
+          </Grid>
+          <AppFooter />
+        </Grid>
       </Router>
     </ThemeProvider>
   )

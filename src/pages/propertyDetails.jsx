@@ -25,9 +25,10 @@ export const PropertyDetails = observer(() => {
 
   const property = propertyStore.propertyDetails
   const seller = propertyStore.sellerDetails
+  const mailLink = `mailto:${propertyStore.sellerDetails.email}`
      
   return (
-    <div>Page détails de la propriété <strong>{property.title}</strong> vendu par <strong>{seller.email}</strong> au prix de <strong>{property.price} €</strong></div>
+    <div>Page détails de la propriété <strong>{property.title}</strong> vendu par <strong><a href={mailLink}>{seller.email}</a></strong> au prix de <strong>{property.price} €</strong></div>
   )
 
 })
