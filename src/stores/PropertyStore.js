@@ -1,4 +1,4 @@
-import { runInAction, toJS } from 'mobx'
+import { runInAction} from 'mobx'
 import axios from 'axios'
 
 const BASE_URL = 'http://localhost:3000/';
@@ -59,24 +59,21 @@ export function createPropertyStore() {
     },
 
     async createProperty(propertyData) {
-      token = localStorage.getItem('auth_token')
+      this.auth_token = localStorage.getItem('auth_token', this.auth_token)
 
       runInAction (() => {
         this.loading = true
         this.hasErrors = false
       })
-      let payload = {
-        headers: {
-          'Authorization': `${token}`
-        },
-        body: `${propertyData}`
-      }
+      let payload = propertyData
       
       try {
         let response = await axios.post(`${BASE_URL}properties`, payload);
-        if (response.ok) {
+        if (response.status == 201) {
           runInAction (() => {
             this.loading = false
+            this.auth_token = response.headers.authorization;
+            axios.defaults.headers.common["Authorization"] = this.auth_token
           })
         } else {
           throw new Error('informations non valides')
