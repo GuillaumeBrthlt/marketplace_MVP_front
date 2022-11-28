@@ -1,7 +1,10 @@
+import Typography from '../components/Typography'
 import { observer } from 'mobx-react-lite'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { DetailsSection } from '../components/properties/detailsSection'
 import { usePropertyStore } from '../contexts/PropertyContext'
+import { Grid } from '@mui/material'
 
 export const PropertyDetails = observer(() => {
   const { id } = useParams()
@@ -25,10 +28,12 @@ export const PropertyDetails = observer(() => {
 
   const property = propertyStore.propertyDetails
   const seller = propertyStore.sellerDetails
-  const mailLink = `mailto:${propertyStore.sellerDetails.email}`
      
   return (
-    <div>Page détails de la propriété <strong>{property.title}</strong> vendu par <strong><a href={mailLink}>{seller.email}</a></strong> au prix de <strong>{property.price} €</strong></div>
+    <Grid paddingX={{xs: 5, md:20}}>
+      <Typography align='center' mb={10} mt={5} gutterBottom marked="center" component="h1" variant='h3'>Details du bien</Typography>
+      <DetailsSection property={property} seller={seller} />
+    </Grid>
   )
 
 })
