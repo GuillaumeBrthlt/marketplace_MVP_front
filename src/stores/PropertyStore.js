@@ -59,7 +59,7 @@ export function createPropertyStore() {
     },
 
     async createProperty(propertyData) {
-      token = localStorage.getItem('auth_token')
+      this.auth_token = localStorage.getItem('auth_token', this.auth_token)
 
       runInAction (() => {
         this.loading = true
