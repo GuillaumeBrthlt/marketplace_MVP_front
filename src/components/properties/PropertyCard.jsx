@@ -19,6 +19,14 @@ const bull = (
 export default function PropertyCard({ property }) {
   const linkToDetails = `/property/details/${property.id}`
 
+  const formatter = new Intl.NumberFormat('fr-FR', {
+    style: 'currency',
+    currency: 'EUR',
+  });
+
+  const price = formatter.format(property.price)
+  
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -26,7 +34,7 @@ export default function PropertyCard({ property }) {
           {property.title}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {property.price} €
+          {price}
         </Typography>
         <Typography variant="body2">
           {property.description}
