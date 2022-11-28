@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { DetailsSection } from '../components/properties/detailsSection'
 import { usePropertyStore } from '../contexts/PropertyContext'
+import  Map  from '../components/map/mapForm'
 import { Grid } from '@mui/material'
 
 export const PropertyDetails = observer(() => {
@@ -30,10 +31,12 @@ export const PropertyDetails = observer(() => {
   const seller = propertyStore.sellerDetails
      
   return (
-    <Grid paddingX={{xs: 5, md:20}}>
-      <Typography align='center' mb={10} mt={5} gutterBottom marked="center" component="h1" variant='h3'>Details du bien</Typography>
-      <DetailsSection property={property} seller={seller} />
-    </Grid>
+    <>
+      <Grid paddingX={{xs: 5, md:20}}>
+        <Typography align='center' mb={10} mt={5} gutterBottom marked="center" component="h1" variant='h3'>Details du bien</Typography>
+        <DetailsSection property={property} seller={seller} />
+      </Grid>
+      <div><Map/></div>
+    </>
   )
-
 })
