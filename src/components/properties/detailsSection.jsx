@@ -41,7 +41,7 @@ export const DetailsSection = (props) => {
           variant="text"
           disabled
         >
-          Inscrivez-vous pour contacter le propriétaire
+          Vous devez être connecté pour contacter le propriétaire
         </Button>
       )
     }
