@@ -20,7 +20,7 @@ export const RegisterPage = observer(() => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    userStore.authenticated ? navigate('/') : '';
+    userStore.authenticated ? navigate(-1) : '';
   }, [userStore.authenticated])
 
   const validate = (values) => {
