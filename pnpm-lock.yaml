@@ -13,6 +13,7 @@ specifiers:
   clsx: ^1.2.1
   final-form: ^4.20.7
   js-cookie: ^3.0.1
+  markdown-to-jsx: ^7.1.7
   mobx: ^6.7.0
   mobx-react: ^7.6.0
   mobx-react-lite: ^3.4.0
@@ -33,6 +34,7 @@ dependencies:
   clsx: 1.2.1
   final-form: 4.20.7
   js-cookie: 3.0.1
+  markdown-to-jsx: 7.1.7_react@18.2.0
   mobx: 6.7.0
   mobx-react: 7.6.0_jofyzmwkboewm6mjrhi25mngky
   mobx-react-lite: 3.4.0_jofyzmwkboewm6mjrhi25mngky
@@ -1224,6 +1226,15 @@ packages:
     dependencies:
       sourcemap-codec: 1.4.8
     dev: true
+
+  /markdown-to-jsx/7.1.7_react@18.2.0:
+    resolution: {integrity: sha512-VI3TyyHlGkO8uFle0IOibzpO1c1iJDcXcS/zBrQrXQQvJ2tpdwVzVZ7XdKsyRz1NdRmre4dqQkMZzUHaKIG/1w==}
+    engines: {node: '>= 10'}
+    peerDependencies:
+      react: '>= 0.14.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /mime-db/1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
