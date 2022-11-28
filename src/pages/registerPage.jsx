@@ -20,7 +20,7 @@ export const RegisterPage = observer(() => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    userStore.authenticated ? navigate('/') : '';
+    userStore.authenticated ? navigate(-1) : '';
   }, [userStore.authenticated])
 
   const validate = (values) => {
@@ -56,7 +56,7 @@ export const RegisterPage = observer(() => {
 
   return (
     <React.Fragment>
-      <Typography sx={userStore.hasErrors ? '' : {display: 'none'}}>
+      <Typography sx={userStore.hasErrors ? '' : {display: 'none'}} align='center' color="red">
         Email ou mot de passe invalide.
       </Typography>
       <AppForm>

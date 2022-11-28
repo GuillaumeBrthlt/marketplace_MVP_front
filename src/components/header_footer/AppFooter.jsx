@@ -61,13 +61,13 @@ export default function AppFooter() {
               <Grid item sx={{ display: 'flex', color: 'secondary.main' }}>
                 <Box component="a" href='mailto:devalamer15@gmail.com' sx={iconStyle}>
                   <img
-                    src="/static/themes/onepirate/appFooterFacebook.png"
+                    src="/public/assets/images/envelope.png"
                     alt="Email"
                   />
                 </Box>
                 <Box component="a" href="https://place-to-play.herokuapp.com/" sx={iconStyle}>
                   <img
-                    src="/static/themes/onepirate/appFooterTwitter.png"
+                    src="/public/assets/images/sound-button.png"
                     alt="PlacetoPlay"
                   />
                 </Box>
