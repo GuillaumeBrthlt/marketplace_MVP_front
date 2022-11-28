@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Field, Form, FormSpy } from 'react-final-form';
 import Box from '@mui/material/Box';
 import Typography from '../components/Typography';
-import AppForm from '../components/appForm';
+import AppForm from '../components/form/appForm';
 import { required } from '../components/form/validation';
 import RFTextField from '../components/form/RFTextField';
 import FormButton from '../components/form/FormButton';

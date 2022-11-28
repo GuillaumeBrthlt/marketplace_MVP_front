@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Field, Form, FormSpy } from 'react-final-form';
 import Box from '@mui/material/Box';
-import Typography from '../components/Typography';
+import Typography from '../Typography';
 import AppForm from '../components/appForm';
-import { required } from '../components/form/validation';
-import RFTextField from '../components/form/RFTextField';
-import FormButton from '../components/form/FormButton';
-import FormFeedback from '../components/form/FormFeedback';
+import { required } from '../form/validation';
+import RFTextField from '../form/RFTextField';
+import FormButton from '../form/FormButton';
+import FormFeedback from '../form/FormFeedback';
 
 export const NewPropertyForm = observer(() => {
   const [title, setTitle] = useState(null)

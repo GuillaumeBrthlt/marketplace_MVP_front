@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { useUserStore } from '../contexts/UserContext'
+import { useUserStore } from '../../contexts/UserContext'
 import AppBar from './appBar'
 import Toolbar from './toolBar'
 import Box from '@mui/material/Box';
