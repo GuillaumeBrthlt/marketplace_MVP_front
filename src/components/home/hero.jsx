@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import Button from './button';
-import Typography from './typography';
+import Button from '../button';
+import Typography from '../typography';
 import HeroLayout from './heroLayout';
 import Image from '/assets/hero/hero.jpg'
 import { observer } from 'mobx-react-lite';
-import { useUserStore } from '../contexts/UserContext';
+import { useUserStore } from '../../contexts/UserContext';
 
 export const Hero = observer(() => {
   const userStore = useUserStore()

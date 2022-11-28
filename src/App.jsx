@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useUserStore } from "./contexts/UserContext";
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Nav from "./components/Nav";
+import Nav from "./components/header_footer/Nav";
 import {LoginPage} from "./pages/loginPage";
 import {RegisterPage} from "./pages/registerPage";
 import ResetPasswordPage from "./pages/resetPasswordPage";
@@ -12,7 +12,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
 import { Navigate } from "react-router-dom";
 import ProfilePage from "./pages/ProfilePage";
-import AppFooter from "./components/AppFooter";
+import AppFooter from "./components/header_footer/AppFooter";
 import {PropertyDetails} from "./pages/propertyDetails";
 import { useEffect } from "react";
 import { usePropertyStore } from "./contexts/PropertyContext";

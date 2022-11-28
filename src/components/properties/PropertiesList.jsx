@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import { usePropertyStore } from '../contexts/PropertyContext'
+import { usePropertyStore } from '../../contexts/PropertyContext';
 import { useState } from 'react'
 import PropertyCard from './PropertyCard'
 import Box from '@mui/material/Box';

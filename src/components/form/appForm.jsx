@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Paper from './paper';
+import Paper from '../paper';
 
 function AppForm(props) {
   const { children } = props;
