@@ -1,5 +1,6 @@
 import { runInAction} from 'mobx'
 import axios from 'axios'
+import { usePropertyStore } from '../contexts/PropertyContext';
 
 const BASE_URL = 'http://localhost:3000/';
 
@@ -77,6 +78,65 @@ export function createPropertyStore() {
           })
         } else {
           throw new Error('informations non valides')
+        }  
+      } catch (error) {
+        runInAction (() => {
+          this.loading = false
+          this.hasErrors = true
+        })
+      }
+    },
+
+    async editProperty(propertyData, id) {
+      this.auth_token = localStorage.getItem('auth_token', this.auth_token)
+
+      runInAction (() => {
+        this.loading = true
+        this.hasErrors = false
+      })
+      let payload = propertyData
+      
+      try {
+        let response = await axios.put(`${BASE_URL}properties/${id}`, payload);
+        console.log(response)
+        if (response.status == 200) {
+          runInAction (() => {
+            this.loading = false
+            this.auth_token = response.headers.authorization;
+            axios.defaults.headers.common["Authorization"] = this.auth_token
+          })
+        } else {
+          throw new Error('informations non valides')
+        }  
+      } catch (error) {
+        runInAction (() => {
+          this.loading = false
+          this.hasErrors = true
+        })
+      }
+    },
+
+
+    async deleteProperty(id) {
+      this.auth_token = localStorage.getItem('auth_token', this.auth_token)
+      
+
+      runInAction (() => {
+        this.loading = true
+        this.hasErrors = false
+      })
+      
+      try {
+        let response = await axios.delete(`${BASE_URL}properties/${id}`);
+        console.log(response)
+        if (response.status == 204) {
+          runInAction (() => {
+            this.loading = false
+            this.auth_token = response.headers.authorization;
+            axios.defaults.headers.common["Authorization"] = this.auth_token
+          })
+        } else {
+          throw new Error('annonce non supprimée')
         }  
       } catch (error) {
         runInAction (() => {

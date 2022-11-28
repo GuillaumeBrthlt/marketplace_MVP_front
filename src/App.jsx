@@ -12,6 +12,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
 import { Navigate } from "react-router-dom";
 import {ProfilePage} from "./pages/ProfilePage";
+import {EditPropertyPage} from "./pages/EditPropertyPage"
 import AppFooter from "./components/header_footer/AppFooter";
 import {PropertyDetails} from "./pages/propertyDetails";
 import { useEffect } from "react";
@@ -52,6 +53,7 @@ export const App = observer(() => {
                 <Route path="/" element={<HomePage />}/>
                 <Route path="/login" element={<LoginPage />}/>
                 <Route path="/register" element={<RegisterPage />}/>
+                <Route path="/property/edit/:id" element={<EditPropertyPage />}/>
                 <Route path="/resetpassword" element={<ResetPasswordPage />}/>
                 <Route path="/new_password" element={<NewPasswordPage />}/>
                 <Route path="/property/details/:id" element={<PropertyDetails />}/>

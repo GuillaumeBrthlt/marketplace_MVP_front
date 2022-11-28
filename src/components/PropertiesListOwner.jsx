@@ -1,4 +1,4 @@
-import PropertyCard from './properties/PropertyCard';
+import PropertyCardOwner from './properties/PropertyCardOwner';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '../components/Typography';
@@ -11,10 +11,10 @@ export const PropertiesListOwner = observer(() => {
   const propertyStore = usePropertyStore()
   const userStore = useUserStore()
   let propertySeller = propertyStore.properties.filter((property) => property.user_id === userStore.user.id)
-    const displayCards = propertySeller.map((property) =>{
+  const displayCards = propertySeller.map((property) =>{
       return (
         <Grid item xs={2} sm={4} md={4} key={property.id}>
-        <PropertyCard property={property} />
+        <PropertyCardOwner property={property} />
       </Grid>
       )
     })

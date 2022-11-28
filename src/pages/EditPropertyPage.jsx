@@ -1,5 +1,5 @@
 import React from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import {useState} from 'react'
 import { Field, Form, FormSpy } from 'react-final-form';
@@ -13,49 +13,50 @@ import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
 import { useUserStore } from '../contexts/UserContext'
 
-export const ProfilePage = observer(() => {
+export const EditPropertyPage = observer(() => {
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState('')
   const userStore = useUserStore()
   const propertyStore = usePropertyStore()
   const navigate = useNavigate()
+  const {id} = useParams()
 
+/* 
   const validate = (values) => {
     const errors = required(['title', 'price', 'description'], values);
 
     if (!errors.title || !errors.price || !errors.description) {
       return (errors)
     }
-/*     if (errors.price.typeof() === String) {
-      return "il faut des chiffres"
-    } */
     return errors;
   }; 
-
+ */
   const handleSubmit = () => {
 	const loginData = {
 	'title': title,
 	'price': price,
 	'description': description,
 	}
-	propertyStore.createProperty(loginData)
+	propertyStore.editProperty(loginData, id)
   navigate("/");
 	};
-
 
   return (
     <React.Fragment>
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
-            Enregistrer votre annonce
+            Modifier votre annonce
+          </Typography>          
+          <Typography variant="h3" gutterBottom marked="center" align="center">
+            {id}
           </Typography>
         </React.Fragment>
         <Form
           onSubmit={handleSubmit}
           subscription={{ submitting: true }}
-          validate={validate}
+//          validate={validate}
         >
           {({ handleSubmit: handleSubmit2, submitting }) => (
             <Box component="form" onSubmit={handleSubmit2} noValidate sx={{ mt: 6 }}>
@@ -66,6 +67,7 @@ export const ProfilePage = observer(() => {
                   component={RFTextField}
                   disabled={submitting}
                   required
+                  value = {title}
                   name="title"
                   autoComplete="title"
                   label="Titre de votre annonce"
@@ -122,10 +124,6 @@ export const ProfilePage = observer(() => {
           )}
         </Form>
       </AppForm>
-      <Typography mt={3} variant="h3" gutterBottom marked="center" align="center">
-        La liste de vos annonces:
-      </Typography>
-        <PropertiesListOwner />   
     </React.Fragment>
   )
 })
