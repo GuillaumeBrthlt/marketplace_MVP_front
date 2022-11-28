@@ -11,7 +11,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
 import { Navigate } from "react-router-dom";
-import ProfilePage from "./pages/ProfilePage";
+import {ProfilePage} from "./pages/ProfilePage";
 import AppFooter from "./components/header_footer/AppFooter";
 import {PropertyDetails} from "./pages/propertyDetails";
 import { useEffect } from "react";

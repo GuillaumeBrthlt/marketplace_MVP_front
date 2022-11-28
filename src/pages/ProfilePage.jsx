@@ -1,28 +1,43 @@
 import React from 'react'
-// import {useState} from 'react'
-//import {PropertiesListOwner} from ../components/PropertiesListOwner'
+import { observer } from 'mobx-react-lite'
+import {useState} from 'react'
+import { Field, Form, FormSpy } from 'react-final-form';
+import Box from '@mui/material/Box';
+import {required} from '../components/form/validation'
+import AppForm from '../components/form/appForm'
+import Typography from '../components/Typography';
+import RFTextField from '../components/form/RFTextField';
+import { PropertiesListOwner } from '../components/PropertiesListOwner';
+import FormButton from '../components/form/FormButton';
+import { usePropertyStore } from '../contexts/PropertyContext'
+import { useUserStore } from '../contexts/UserContext'
 
-export default function ProfilePage() {
-  return (
-    <div>Hello</div>
-  )
-}
-/* 
 export const ProfilePage = observer(() => {
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState('')
   const userStore = useUserStore()
   const propertyStore = usePropertyStore()
- 
+
+  const validate = (values) => {
+    const errors = required(['title', 'price', 'description'], values);
+
+    if (!errors.title || !errors.price || !errors.description) {
+      return (errors)
+    }
+/*     if (errors.price.typeof() === String) {
+      return "il faut des chiffres"
+    } */
+    return errors;
+  }; 
+
   const handleSubmit = () => {
 	const loginData = {
-		“title”: title,
-		“price”: price,
-		“description”: description,
-		“user_id”: userStore.user.id
-	   }
-	propertyStore.createProperty()
+	'title': title,
+	'price': price,
+	'description': description,
+	  }
+	propertyStore.createProperty(loginData)
 	};
 
 
@@ -104,53 +119,10 @@ export const ProfilePage = observer(() => {
           )}
         </Form>
       </AppForm>
-    </React.Fragment>
-    <React.Fragment>
       <Typography mt={3} variant="h3" gutterBottom marked="center" align="center">
         La liste de vos annonces:
       </Typography>
-      {if(propertyStore.properties.length != 0) {
-        <PropertiesListOwner />
-        else {
-          <Typography mt={2} variant="h6" gutterBottom marked="center" align="center">
-        Vous n'avez encore aucune annonce postée !
-      </Typography>
-        }
-      }}
-    
+        <PropertiesListOwner />   
     </React.Fragment>
   )
-} 
-
-*********** in PropertiesListOwner.jsx (new file to add) *************
-
-import PropertyCard from './PropertyCard'
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import { observer } from 'mobx-react-lite';
-
-export const PropertiesListOwner = observer(() => {
-  const propertyStore = usePropertyStore()
-  const userStore = useUserStore()
-
-
-    const displayCards = propertyStore.properties.map((property) =>
-    if (property.user_id == userStore.user.id) {
-    <Grid item xs={2} sm={4} md={4} key={property.id}>
-        <PropertyCard property={property} />
-      </Grid>
-    })
-
-    return (
-      <Box marginX={{md: 8}} marginY={8}>
-        <Grid 
-          container
-          spacing={{ xs: 6, md: 3 }} 
-          columns={{ xs: 1, sm: 8, md: 12 }}
-        >
-          {displayCards}
-        </Grid>
-      </Box>
-    )
 })
-*/
