@@ -40,6 +40,7 @@ export function createPropertyStore() {
       }
     },
 
+
     async getSellers() {
       runInAction(() => {
         this.loading = true

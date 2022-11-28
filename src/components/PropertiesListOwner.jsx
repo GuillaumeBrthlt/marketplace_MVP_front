@@ -1,3 +1,4 @@
+import {useEffect} from 'react'
 import PropertyCardOwner from './properties/PropertyCardOwner';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -11,6 +12,11 @@ export const PropertiesListOwner = observer(() => {
   const propertyStore = usePropertyStore()
   const userStore = useUserStore()
   let propertySeller = propertyStore.properties.filter((property) => property.user_id === userStore.user.id)
+
+  useEffect(() => {
+    propertyStore.getProperties()
+  }, [])
+
   const displayCards = propertySeller.map((property) =>{
       return (
         <Grid item xs={2} sm={4} md={4} key={property.id}>
