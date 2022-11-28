@@ -2,7 +2,8 @@ import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { usePropertyStore } from '../contexts/PropertyContext'
-import { getMap } from '../components/map/map'
+import  Map  from '../components/map/mapForm'
+
 
 export const PropertyDetails = observer(() => {
   const { id } = useParams()
@@ -30,9 +31,8 @@ export const PropertyDetails = observer(() => {
      
   return (
     <>
-    <div>Page détails de la propriété <strong>{property.title}</strong> vendu par <strong><a href={mailLink}>{seller.email}</a></strong> au prix de <strong>{property.price} €</strong></div>
-    <getMap/>
+      <div>Page détails de la propriété <strong>{property.title}</strong> vendu par <strong><a href={mailLink}>{seller.email}</a></strong> au prix de <strong>{property.price} €</strong></div>
+      <div><Map/></div>
     </>
   )
-
 })
