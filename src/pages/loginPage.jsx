@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { Link, useNavigate } from 'react-router-dom'
 import { Field, Form, FormSpy } from 'react-final-form';
 import Box from '@mui/material/Box';
-import Typography from '../components/Typography';
+import Typography from '../components/typography';
 import AppForm from '../components/form/appForm';
 import { emailVerif, required } from '../components/form/validation';
 import RFTextField from '../components/form/RFTextField';
@@ -19,7 +19,7 @@ export const LoginPage = observer(() => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    userStore.authenticated ? navigate('/dashboard') : '';
+    userStore.authenticated ? navigate(-1) : '';
   }, [userStore.authenticated])
   
   const validate = (values) => {

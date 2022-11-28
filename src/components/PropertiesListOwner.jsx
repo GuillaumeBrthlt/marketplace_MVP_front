@@ -1,7 +1,7 @@
 import PropertyCard from './properties/PropertyCard';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Typography from '../components/Typography';
+import Typography from '../components/typography';
 import { observer } from 'mobx-react-lite';
 import { usePropertyStore } from '../contexts/PropertyContext'
 import { useUserStore } from '../contexts/UserContext'
