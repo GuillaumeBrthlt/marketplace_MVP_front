@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Typography from '../Typography';
+import Typography from '../typography';
 
 const BoxStyled = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'error' && prop !== 'success',
