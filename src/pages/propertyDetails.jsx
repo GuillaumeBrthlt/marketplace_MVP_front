@@ -36,7 +36,7 @@ export const PropertyDetails = observer(() => {
         <Typography align='center' mb={10} mt={5} gutterBottom marked="center" component="h1" variant='h3'>Details du bien</Typography>
         <DetailsSection property={property} seller={seller} />
       </Grid>
-      <div><Map/></div>
+      <div style={{display: "flex", justifyContent: "center"}}><Map property={property}/></div>
     </>
   )
 })
