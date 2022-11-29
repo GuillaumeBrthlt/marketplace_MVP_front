@@ -72,6 +72,7 @@ export const ProfilePage = observer(() => {
     data.append("property[basement]", basement)
     console.log(data)
     propertyStore.createProperty(data)
+    navigate('/')
 	};
 
   const resizeFile = (file) => new Promise(resolve => {

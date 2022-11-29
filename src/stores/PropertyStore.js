@@ -96,7 +96,6 @@ export function createPropertyStore() {
     },
 
     async editProperty(propertyData, id) {
-      localStore.getItem('properties', this.properties)
       runInAction (() => {
         this.loading = true
         this.hasErrors = false
