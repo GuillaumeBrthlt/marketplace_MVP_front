@@ -17,7 +17,7 @@ export const PropertyDetails = observer(() => {
 
   useEffect(() => {
     if(propertyStore.propertyDetails.id) {
-      propertyStore.setSellerDetails(propertyStore.propertyDetails.user_id)
+      propertyStore.setSellerDetails(propertyStore.propertyDetails.attributes.user_id)
     }
   }, [propertyStore.propertyDetails])
 
@@ -27,7 +27,7 @@ export const PropertyDetails = observer(() => {
     )
   } 
 
-  const property = propertyStore.propertyDetails
+  const property = propertyStore.propertyDetails.attributes
   const seller = propertyStore.sellerDetails
      
   return (

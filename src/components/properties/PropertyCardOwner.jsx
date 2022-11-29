@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { usePropertyStore } from '../../contexts/PropertyContext';
 import { useUserStore } from '../../contexts/UserContext';
 import { useEffect } from 'react';
+import { CardMedia } from '@mui/material';
 
 const bull = (
   <Box
@@ -38,6 +39,11 @@ export default function PropertyCard({ property }) {
   if(property.user_id == userStore.user.id) {
       return (
     <Card sx={{ minWidth: 275 }}>
+      <CardMedia
+          component='img'
+          height='300'
+          image={property.picture_url ? property.picture_url : 'assets/properties/default.jpg'} 
+        />
       <CardContent>
         <Typography variant="h5" component="div">
           {property.title}

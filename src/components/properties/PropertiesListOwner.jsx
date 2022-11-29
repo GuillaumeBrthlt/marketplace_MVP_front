@@ -11,7 +11,7 @@ import { useUserStore } from '../../contexts/UserContext'
 export const PropertiesListOwner = observer(() => {
   const propertyStore = usePropertyStore()
   const userStore = useUserStore()
-  let propertySeller = propertyStore.properties.filter((property) => property.user_id === userStore.user.id)
+  let propertySeller = propertyStore.properties.filter((property) => property.attributes.user_id === userStore.user.id)
 
   useEffect(() => {
     propertyStore.getProperties()
@@ -20,7 +20,7 @@ export const PropertiesListOwner = observer(() => {
   const displayCards = propertySeller.map((property) =>{
       return (
         <Grid item xs={2} sm={4} md={4} key={property.id}>
-        <PropertyCardOwner property={property} />
+        <PropertyCardOwner property={property.attributes} />
       </Grid>
       )
     })
