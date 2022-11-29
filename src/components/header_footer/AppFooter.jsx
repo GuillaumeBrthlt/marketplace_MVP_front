@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
-import Typography from '../Typography';
-import TextField from '../TextField';
+import Typography from '../typography';
+import TextField from '../textField';
 
 function Copyright() {
   return (
@@ -61,13 +61,13 @@ export default function AppFooter() {
               <Grid item sx={{ display: 'flex', color: 'secondary.main' }}>
                 <Box component="a" href='mailto:devalamer15@gmail.com' sx={iconStyle}>
                   <img
-                    src="/static/themes/onepirate/appFooterFacebook.png"
+                    src="/public/assets/images/envelope.png"
                     alt="Email"
                   />
                 </Box>
                 <Box component="a" href="https://place-to-play.herokuapp.com/" sx={iconStyle}>
                   <img
-                    src="/static/themes/onepirate/appFooterTwitter.png"
+                    src="/public/assets/images/sound-button.png"
                     alt="PlacetoPlay"
                   />
                 </Box>
@@ -83,10 +83,7 @@ export default function AppFooter() {
             </Typography>
             <Box component="ul" sx={{ m: 0, listStyle: 'none', p: 0 }}>
               <Box component="li" sx={{ py: 0.5 }}>
-                <Link href="/premium-themes/onepirate/terms/">Terms</Link>
-              </Box>
-              <Box component="li" sx={{ py: 0.5 }}>
-                <Link href="/premium-themes/onepirate/privacy/">Privacy</Link>
+                <Link href="/terms_privacy/">Terms & Privacy</Link>
               </Box>
             </Box>
           </Grid>

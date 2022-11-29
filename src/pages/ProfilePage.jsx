@@ -6,7 +6,7 @@ import { Field, Form, FormSpy } from 'react-final-form';
 import Box from '@mui/material/Box';
 import {required} from '../components/form/validation'
 import AppForm from '../components/form/appForm'
-import Typography from '../components/Typography';
+import Typography from '../components/typography';
 import RFTextField from '../components/form/RFTextField';
 import { PropertiesListOwner } from '../components/properties/PropertiesListOwner';
 import FormButton from '../components/form/FormButton';
