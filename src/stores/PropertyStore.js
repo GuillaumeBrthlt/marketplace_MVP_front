@@ -1,6 +1,5 @@
 import { runInAction} from 'mobx'
 import axios from 'axios'
-import { usePropertyStore } from '../contexts/PropertyContext';
 
 const BASE_URL = 'http://localhost:3000/';
 
@@ -61,7 +60,6 @@ export function createPropertyStore() {
     },
 
     async createProperty(propertyData) {
-      this.auth_token = localStorage.getItem('auth_token', this.auth_token)
 
       runInAction (() => {
         this.loading = true
@@ -74,8 +72,7 @@ export function createPropertyStore() {
         if (response.status == 201) {
           runInAction (() => {
             this.loading = false
-            this.auth_token = response.headers.authorization;
-            axios.defaults.headers.common["Authorization"] = this.auth_token
+
           })
         } else {
           throw new Error('informations non valides')
@@ -89,8 +86,7 @@ export function createPropertyStore() {
     },
 
     async editProperty(propertyData, id) {
-      this.auth_token = localStorage.getItem('auth_token', this.auth_token)
-
+      localStore.getItem('properties', this.properties)
       runInAction (() => {
         this.loading = true
         this.hasErrors = false
@@ -99,12 +95,9 @@ export function createPropertyStore() {
       
       try {
         let response = await axios.put(`${BASE_URL}properties/${id}`, payload);
-        console.log(response)
         if (response.status == 200) {
           runInAction (() => {
             this.loading = false
-            this.auth_token = response.headers.authorization;
-            axios.defaults.headers.common["Authorization"] = this.auth_token
           })
         } else {
           throw new Error('informations non valides')
@@ -119,7 +112,6 @@ export function createPropertyStore() {
 
 
     async deleteProperty(id) {
-      this.auth_token = localStorage.getItem('auth_token', this.auth_token)
       
 
       runInAction (() => {
@@ -129,13 +121,10 @@ export function createPropertyStore() {
       
       try {
         let response = await axios.delete(`${BASE_URL}properties/${id}`);
-        console.log(response)
         if (response.status == 204) {
           runInAction (() => {
             this.loading = false
-            this.auth_token = response.headers.authorization;
-            axios.defaults.headers.common["Authorization"] = this.auth_token
-          })
+         })
         } else {
           throw new Error('annonce non supprimée')
         }  

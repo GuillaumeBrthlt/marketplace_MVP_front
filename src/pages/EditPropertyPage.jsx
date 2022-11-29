@@ -50,7 +50,7 @@ export const EditPropertyPage = observer(() => {
             Modifier votre annonce
           </Typography>          
           <Typography variant="h3" gutterBottom marked="center" align="center">
-            {id}
+            essai
           </Typography>
         </React.Fragment>
         <Form
@@ -67,7 +67,6 @@ export const EditPropertyPage = observer(() => {
                   component={RFTextField}
                   disabled={submitting}
                   required
-                  value = {title}
                   name="title"
                   autoComplete="title"
                   label="Titre de votre annonce"

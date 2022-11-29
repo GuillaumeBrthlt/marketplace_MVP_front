@@ -1,43 +1,41 @@
 import { observer } from "mobx-react-lite";
 import { useUserStore } from "./contexts/UserContext";
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Nav from "./components/header_footer/Nav";
-import {LoginPage} from "./pages/loginPage";
-import {RegisterPage} from "./pages/registerPage";
+import { LoginPage } from "./pages/loginPage";
+import { RegisterPage } from "./pages/registerPage";
 import ResetPasswordPage from "./pages/resetPasswordPage";
 import NewPasswordPage from "./pages/newPasswordPage";
 import HomePage from "./pages/homePage";
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import theme from './theme';
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from "./theme";
 import { Navigate } from "react-router-dom";
-import {ProfilePage} from "./pages/ProfilePage";
-import {EditPropertyPage} from "./pages/EditPropertyPage"
+import { ProfilePage } from "./pages/ProfilePage";
+import { EditPropertyPage } from "./pages/EditPropertyPage";
 import AppFooter from "./components/header_footer/AppFooter";
-import {PropertyDetails} from "./pages/propertyDetails";
+import { PropertyDetails } from "./pages/propertyDetails";
 import { useEffect } from "react";
 import { usePropertyStore } from "./contexts/PropertyContext";
 import { Grid } from "@mui/material";
-import ReactComponent from "./components/terms_privacy.md";
 
 export const App = observer(() => {
-  const userStore = useUserStore()
-  const propertyStore = usePropertyStore()
-
+  const userStore = useUserStore();
+  const propertyStore = usePropertyStore();
 
   let localAuthToken = localStorage.auth_token;
-  let cookieExists = localAuthToken !== 'undefined' && localAuthToken !== null
+  let cookieExists = localAuthToken !== "undefined" && localAuthToken !== null;
   if (cookieExists) {
-    const auth_token = localStorage.getItem('auth_token');
-    const authTokenExists = auth_token !== undefined && auth_token !== null
+    const auth_token = localStorage.getItem("auth_token");
+    const authTokenExists = auth_token !== undefined && auth_token !== null;
     if (authTokenExists) {
-      userStore.loginUserWithToken(auth_token)
+      userStore.loginUserWithToken(auth_token);
     }
   }
 
-  function PrivateRoute({ component: Page }) { 
+  function PrivateRoute({ component: Page }) {
     if (!userStore.authenticated) {
-        return <Navigate to="/login"/>
+      return <Navigate to="/login" />;
     }
     return Page;
   }
@@ -51,15 +49,23 @@ export const App = observer(() => {
           <Grid flex={1}>
             <main>
               <Routes>
-                <Route path="/" element={<HomePage />}/>
-                <Route path="/login" element={<LoginPage />}/>
-                <Route path="/register" element={<RegisterPage />}/>
-                <Route path="/property/edit/:id" element={<EditPropertyPage />}/>
-                <Route path="/resetpassword" element={<ResetPasswordPage />}/>
-                <Route path="/new_password" element={<NewPasswordPage />}/>
-                <Route path="/property/details/:id" element={<PropertyDetails />}/>
-                <Route path="/dashboard" element={<PrivateRoute component={<ProfilePage />}/>}/>
-                <Route path="/terms_privacy" element={<ReactComponent />}/>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route
+                  path="/property/edit/:id"
+                  element={<EditPropertyPage />}
+                />
+                <Route path="/resetpassword" element={<ResetPasswordPage />} />
+                <Route path="/new_password" element={<NewPasswordPage />} />
+                <Route
+                  path="/property/details/:id"
+                  element={<PropertyDetails />}
+                />
+                <Route
+                  path="/dashboard"
+                  element={<PrivateRoute component={<ProfilePage />} />}
+                />
               </Routes>
             </main>
           </Grid>
@@ -67,5 +73,5 @@ export const App = observer(() => {
         </Grid>
       </Router>
     </ThemeProvider>
-  )
-})
+  );
+});

@@ -33,7 +33,6 @@ export const ProfilePage = observer(() => {
     return errors;
   }; 
 
-
   const handleSubmit = () => {
 	const propertyData = {
 	'title': title,
