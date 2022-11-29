@@ -21,6 +21,7 @@ specifiers:
   react: ^18.2.0
   react-dom: ^18.2.0
   react-final-form: ^6.5.9
+  react-image-file-resizer: ^0.4.8
   react-leaflet: ^4.2.0
   react-router-dom: ^6.4.3
   vite: ^3.2.3
@@ -44,6 +45,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-final-form: 6.5.9_b76tjmhm4bpbaoui6lan2hu4pm
+  react-image-file-resizer: 0.4.8
   react-leaflet: 4.2.0_yydtlhsdonbqao6vgvkwhv2zki
   react-router-dom: 6.4.3_biqbaboplfbrettd7655fr4n2y
 
@@ -1635,6 +1637,10 @@ packages:
       '@babel/runtime': 7.20.1
       final-form: 4.20.7
       react: 18.2.0
+    dev: false
+
+  /react-image-file-resizer/0.4.8:
+    resolution: {integrity: sha512-Ue7CfKnSlsfJ//SKzxNMz8avDgDSpWQDOnTKOp/GNRFJv4dO9L5YGHNEnj40peWkXXAK2OK0eRIoXhOYpUzUTQ==}
     dev: false
 
   /react-is/16.13.1:

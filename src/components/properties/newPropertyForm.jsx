@@ -93,6 +93,7 @@ export const NewPropertyForm = observer(() => {
                   size="large"
                 />
                </div>
+               
               <FormSpy subscription={{ submitError: true }}>
                 {({ submitError }) =>
                   submitError ? (
