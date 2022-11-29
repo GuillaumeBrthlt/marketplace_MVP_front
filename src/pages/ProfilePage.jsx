@@ -156,7 +156,7 @@ export const ProfilePage = observer(() => {
                   margin="normal"
                 />
               </div>
-              <div type="input" onChange={e => setCity(e.target.value)}>
+              <div type="input" onChange={e => setCity(e.target.value.toUpperCase().split(' ').join('-'))}>
                 <Field
                   fullWidth
                   size="large"
