@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import {useState} from 'react'
 import { Field, Form, FormSpy } from 'react-final-form';
@@ -8,20 +8,15 @@ import {required} from '../components/form/validation'
 import AppForm from '../components/form/appForm'
 import Typography from '../components/typography';
 import RFTextField from '../components/form/RFTextField';
-import { PropertiesListOwner } from '../components/properties/PropertiesListOwner';
+import TextField from '../components/textField';
 import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
 import { useUserStore } from '../contexts/UserContext'
-import RFUploadField from '../components/form/RFUploadField';
-import Resizer from 'react-image-file-resizer'
-import TextField from '../components/textField';
 
-export const ProfilePage = observer(() => {
+export const EditPropertyPage = observer(() => {
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState('')
-  const propertyStore = usePropertyStore()
-  const [picture, setPicture] = useState(undefined)
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
   const [zipcode, setZipcode] = useState(0)
@@ -31,9 +26,36 @@ export const ProfilePage = observer(() => {
   const [carPark, setCarPark] = useState(true)
   const [outside, setOutside] = useState(true)
   const [basement, setBasement] = useState(true)
-  
   const userStore = useUserStore()
+  const propertyStore = usePropertyStore()
+  const property = propertyStore.propertyDetails.attributes
   const navigate = useNavigate()
+  const {id} = useParams()
+
+
+  useEffect(() => {
+    propertyStore.setPropertyDetails(id) 
+  }, [id])
+
+  const handleSubmit = () => {
+	const loginData = {
+	'title': title,
+	'price': price,
+	'description': description,
+  'address' : address,
+  'city' : city,
+  'zipcode': zipcode,
+  'aera': aera,
+  'rooms': rooms,
+  'furnished': furnished,
+  'car_park': carPark,
+  'has_outside': outside,
+  'basement': basement
+	}
+	propertyStore.editProperty(loginData, id)
+  navigate("/dashboard");
+	};
+
 
   const formOptions = [
     { value: true , name: 'Oui', code: 'true' },
@@ -53,39 +75,9 @@ export const ProfilePage = observer(() => {
     return errors;
   }; 
 
-  const handleSubmit = () => {
-    const data = new FormData()
-    data.append("property[title]", title)
-    data.append("property[price]", price)
-    data.append("property[description]", description)
-    if (picture) {
-      data.append("property[picture]", picture)
-    }
-    data.append("property[address]", address)
-    data.append("property[city]", city)
-    data.append("property[zipcode]", zipcode)
-    data.append("property[aera]", aera)
-    data.append("property[rooms]", rooms)
-    data.append("property[furnished]", furnished)
-    data.append("property[car_park]", carPark)
-    data.append("property[has_outside]", outside)
-    data.append("property[basement]", basement)
-    propertyStore.createProperty(data)
-    navigate('/')
-	};
+ 
 
-  const resizeFile = (file) => new Promise(resolve => {
-    Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0,
-    uri => {
-      resolve(uri);
-    }, 'file' );
-  });
 
-  const handlePicture = async (event) => {
-    const file = event.target.files[0];
-    const resizedImage = await resizeFile(file);
-    setPicture(resizedImage)
-  }     
 
   return (
     <React.Fragment>
@@ -291,16 +283,87 @@ export const ProfilePage = observer(() => {
                   ))}
                 </TextField>
               </div>
-              <div type="input" onChange={handlePicture}>
+            <FormSpy subscription={{ submitError: true }}>
+                {({ submitError }) =>
+                  submitError ? (
+                    <FormFeedback error sx={{ mt: 2 }}>
+                      {submitError}
+                    </FormFeedback>
+                  ) : null
+                }
+              </FormSpy>
+              <FormButton
+                sx={{ mt: 3, mb: 2 }}
+                disabled={submitting}
+                size="large"
+                color="secondary"
+                fullWidth
+              >
+                {submitting ? 'En cours…' : "Confirmer"}
+              </FormButton>
+            </Box>
+          )}
+        </Form>
+      </AppForm>
+    </React.Fragment>
+  )
+})
+
+/* 
+  return (
+    <React.Fragment>
+      <AppForm>
+        <React.Fragment>
+          <Typography variant="h3" gutterBottom marked="center" align="center">
+            Modifier votre annonce
+          </Typography>          
+        </React.Fragment>
+        <Form
+          onSubmit={handleSubmit}
+          subscription={{ submitting: true }}
+//          validate={validate}
+        >
+          {({ handleSubmit: handleSubmit2, submitting }) => (
+            <Box component="form" onSubmit={handleSubmit2} noValidate sx={{ mt: 6 }}>
+              <div type="input" onChange={e => setTitle(e.target.value)}>
                 <Field
                   fullWidth
-                  size='large'
-                  type='file'
-                  component={RFUploadField}
+                  size="large"
+                  component={RFTextField}
                   disabled={submitting}
-                  name='picture'
-                  label='photo'
-                  margin='normal'
+                  required
+                  name="title"
+                  autoComplete="title"
+                  label="Titre de votre annonce"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setPrice(e.target.value)}>
+                <Field
+                  fullWidth
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="price"
+                  autoComplete="price"
+                  label="Prix de votre bien"
+                  margin="normal"
+                />
+              </div>              
+              <div type="input" onChange={e => setDescription(e.target.value)}>
+                <Field
+                  fullWidth
+                  multiline
+                  rows={5}
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="description"
+                  autoComplete="description"
+                  label="Description"
+                  margin="normal"
                 />
               </div>
               <FormSpy subscription={{ submitError: true }}>
@@ -325,10 +388,6 @@ export const ProfilePage = observer(() => {
           )}
         </Form>
       </AppForm>
-      <Typography mt={3} variant="h3" gutterBottom marked="center" align="center">
-        La liste de vos annonces:
-      </Typography>
-        <PropertiesListOwner />   
     </React.Fragment>
   )
-})
+}) */

@@ -14,6 +14,15 @@ export function createPropertyStore() {
       title: null,
       description: null,
       user_id: null,
+      address: null,
+      city: null,
+      zipcode: null,
+      aera: null,
+      rooms: null,
+      furnished: true,
+      car_park: true,
+      has_outside: true,
+      basement: true
     },
     sellerDetails: {
       id: null,
@@ -39,6 +48,7 @@ export function createPropertyStore() {
       }
     },
 
+
     async getSellers() {
       runInAction(() => {
         this.loading = true
@@ -59,7 +69,6 @@ export function createPropertyStore() {
     },
 
     async createProperty(propertyData) {
-      this.auth_token = localStorage.getItem('auth_token', this.auth_token)
 
       runInAction (() => {
         this.loading = true
@@ -70,13 +79,63 @@ export function createPropertyStore() {
       try {
         let response = await axios.post(`${BASE_URL}properties`, payload);
         if (response.status == 201) {
+          console.log(this.properties)
           runInAction (() => {
             this.loading = false
-            this.auth_token = response.headers.authorization;
-            axios.defaults.headers.common["Authorization"] = this.auth_token
+
           })
         } else {
           throw new Error('informations non valides')
+        }  
+      } catch (error) {
+        runInAction (() => {
+          this.loading = false
+          this.hasErrors = true
+        })
+      }
+    },
+
+    async editProperty(propertyData, id) {
+      runInAction (() => {
+        this.loading = true
+        this.hasErrors = false
+      })
+      let payload = propertyData
+      
+      try {
+        let response = await axios.put(`${BASE_URL}properties/${id}`, payload);
+        if (response.status == 200) {
+          runInAction (() => {
+            this.loading = false
+          })
+        } else {
+          throw new Error('informations non valides')
+        }  
+      } catch (error) {
+        runInAction (() => {
+          this.loading = false
+          this.hasErrors = true
+        })
+      }
+    },
+
+
+    async deleteProperty(id) {
+      
+
+      runInAction (() => {
+        this.loading = true
+        this.hasErrors = false
+      })
+      
+      try {
+        let response = await axios.delete(`${BASE_URL}properties/${id}`);
+        if (response.status == 204) {
+          runInAction (() => {
+            this.loading = false
+         })
+        } else {
+          throw new Error('annonce non supprimée')
         }  
       } catch (error) {
         runInAction (() => {

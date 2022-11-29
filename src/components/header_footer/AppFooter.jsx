@@ -11,7 +11,7 @@ function Copyright() {
     <React.Fragment>
       {'© '}
       <Link color="inherit" href="https://www.devalamer.fr/">
-        Fabulous_Vocal15
+        Fabulous Vocal 15
       </Link>{' '}
       {new Date().getFullYear()}
     </React.Fragment>
@@ -83,7 +83,7 @@ export default function AppFooter() {
             </Typography>
             <Box component="ul" sx={{ m: 0, listStyle: 'none', p: 0 }}>
               <Box component="li" sx={{ py: 0.5 }}>
-                <Link to="/Terms">Terms</Link>
+                <Link href="/terms_privacy/">Terms & Privacy</Link>
               </Box>
             </Box>
           </Grid>

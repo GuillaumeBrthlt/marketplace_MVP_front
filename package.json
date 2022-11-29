@@ -27,6 +27,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-final-form": "^6.5.9",
+    "react-image-file-resizer": "^0.4.8",
     "react-leaflet": "^4.2.0",
     "react-markdown": "^8.0.3",
     "react-router-dom": "^6.4.3"
@@ -37,6 +38,6 @@
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^2.2.0",
     "vite": "^3.2.3",
-    "vite-plugin-md": "^0.20.4"
+    "vite-plugin-react-markdown": "^0.2.4"
   }
 }

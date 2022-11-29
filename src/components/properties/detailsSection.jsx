@@ -4,10 +4,12 @@ import {
   CardActions,
   CardContent,
   Divider,
-  Typography
+  Typography,
+  Grid
 } from '@mui/material';
 import { useUserStore } from '../../contexts/UserContext';
 import Button from '../button';
+import Paper from '../paper';
 
 
 
@@ -30,7 +32,7 @@ export const DetailsSection = (props) => {
           variant="text"
           href={`mailto:${seller.email}`}
         >
-          Contacter le propriétaire à {seller.email}
+          Pour contacter le/la propriétaire: {seller.email}
         </Button>
       )
     } else {
@@ -41,48 +43,103 @@ export const DetailsSection = (props) => {
           variant="text"
           disabled
         >
-          Vous devez être connecté pour contacter le propriétaire
+          Vous devez être connecté pour contacter le/la propriétaire
         </Button>
       )
     }
   }
 
   return(
-    <Card {...props}>
-      <CardContent>
-        <Box
-          sx={{
-            alignItems: 'center',
-            display: 'flex',
-            flexDirection: 'column'
-          }}
-        >
-          <Typography
-            color="textPrimary"
-            gutterBottom
-            variant="h5"
+    <Card {...props} sx={{marginBottom: '100px'}}>
+      <Paper
+        background='light'
+      >
+        <CardContent>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column'
+            }}
           >
-            {property.title}
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="body2"
-          >
-            {`${price}`}
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="body1"
-            mt={4}
-          >
-            {property.description}
-          </Typography>
-        </Box>
-      </CardContent>
-      <Divider />
-      <CardActions>
-        <ContactButton />
-      </CardActions>
+            <Grid alignSelf='center' height={{xs: '300px', md: '500px', xl: '600px'}} mb={10}>
+            <img src={property.picture_url ? property.picture_url : '/assets/properties/default.jpg'} style={{height: '100%'}}></img>
+            </Grid>
+            <Typography
+              color="textPrimary"
+              gutterBottom
+              variant="h5"
+            >
+              {property.title}
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body2"
+            >
+              {`${price}`}
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body1"
+              mt={4}
+            >
+              {property.description}
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body1"
+              mt={4}
+            >
+              Ce bien se situe à {property.city}, {property.zipcode} ({property.address})
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body1"
+              mt={4}
+            >
+              Il est composé de {property.rooms} pièce(s).
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body1"
+              mt={4}
+            >
+              Pour une surface de {property.aera} m².
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body1"
+              mt={4}
+            >
+              Meublé : {property.furnished ? "oui" : "non"}
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body1"
+              mt={4}
+            >
+              Parking : {property.carPark ? "oui" : "non"}
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body1"
+              mt={4}
+            >
+              Extérieur : {property.outside ? "oui" : "non"}
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body1"
+              mt={4}
+            >
+              Cave : {property.basement ? "oui" : "non"}
+            </Typography>
+          </Box>
+        </CardContent>
+        <Divider />
+        <CardActions>
+          <ContactButton />
+        </CardActions>
+      </Paper>
     </Card>
   )
 };
