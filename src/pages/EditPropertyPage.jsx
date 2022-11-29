@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import {useState} from 'react'
@@ -18,9 +18,9 @@ export const EditPropertyPage = observer(() => {
   const [description, setDescription] = useState('')
   const userStore = useUserStore()
   const propertyStore = usePropertyStore()
+  const property = propertyStore.propertyDetails
   const navigate = useNavigate()
   const {id} = useParams()
-
 /* 
   const validate = (values) => {
     const errors = required(['title', 'price', 'description'], values);
@@ -31,6 +31,10 @@ export const EditPropertyPage = observer(() => {
     return errors;
   }; 
  */
+
+  useEffect(() => {
+    propertyStore.setPropertyDetails(id) 
+  }, [id])
 
   const handleSubmit = () => {
 	const loginData = {
@@ -49,9 +53,6 @@ export const EditPropertyPage = observer(() => {
           <Typography variant="h3" gutterBottom marked="center" align="center">
             Modifier votre annonce
           </Typography>          
-          <Typography variant="h3" gutterBottom marked="center" align="center">
-            essai
-          </Typography>
         </React.Fragment>
         <Form
           onSubmit={handleSubmit}

@@ -70,6 +70,7 @@ export function createPropertyStore() {
       try {
         let response = await axios.post(`${BASE_URL}properties`, payload);
         if (response.status == 201) {
+          console.log(this.properties)
           runInAction (() => {
             this.loading = false
 
