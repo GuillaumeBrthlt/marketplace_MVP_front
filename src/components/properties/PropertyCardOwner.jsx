@@ -8,8 +8,8 @@ import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePropertyStore } from '../../contexts/PropertyContext';
 import { useUserStore } from '../../contexts/UserContext';
-import { useEffect } from 'react';
 import { CardMedia } from '@mui/material';
+
 
 const bull = (
   <Box
@@ -21,6 +21,7 @@ const bull = (
 );
 
 export default function PropertyCard({ property }) {
+  
   const linkToDetails = `/property/details/${property.id}`
   const linkToEdit = `/property/edit/${property.id}`
   const idThisProperty = property.id
@@ -33,6 +34,7 @@ export default function PropertyCard({ property }) {
   const deleteThisProperty = () => {
     propertyStore.deleteProperty(idThisProperty)
     navigate('/')
+
   }
 
 
