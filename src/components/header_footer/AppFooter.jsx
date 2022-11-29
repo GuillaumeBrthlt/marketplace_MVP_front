@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Link from 'react-router-dom'
+import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
 import Typography from '../typography';
 
@@ -30,6 +30,16 @@ const iconStyle = {
   },
 };
 
+const LANGUAGES = [
+  {
+    code: 'en-US',
+    name: 'English',
+  },
+  {
+    code: 'fr-FR',
+    name: 'Français',
+  },
+];
 
 export default function AppFooter() {
   return (
@@ -50,13 +60,13 @@ export default function AppFooter() {
               <Grid item sx={{ display: 'flex', color: 'secondary.main' }}>
                 <Box component="a" href='mailto:devalamer15@gmail.com' sx={iconStyle}>
                   <img
-                    src="/assets/images/envelope.png"
+                    src="/public/assets/images/envelope.png"
                     alt="Email"
                   />
                 </Box>
                 <Box component="a" href="https://place-to-play.herokuapp.com/" sx={iconStyle}>
                   <img
-                    src="/assets/images/sound-button.png"
+                    src="/public/assets/images/sound-button.png"
                     alt="PlacetoPlay"
                   />
                 </Box>
