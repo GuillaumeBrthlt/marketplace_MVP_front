@@ -70,7 +70,6 @@ export const ProfilePage = observer(() => {
     data.append("property[car_park]", carPark)
     data.append("property[has_outside]", outside)
     data.append("property[basement]", basement)
-    console.log(data)
     propertyStore.createProperty(data)
     navigate('/')
 	};
