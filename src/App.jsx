@@ -17,7 +17,7 @@ import {PropertyDetails} from "./pages/propertyDetails";
 import { useEffect } from "react";
 import { usePropertyStore } from "./contexts/PropertyContext";
 import { Grid } from "@mui/material";
-import Terms from "./components/header_footer/terms";
+import TermsPage from "./components/header_footer/Terms";
 
 
 export const App = observer(() => {
@@ -58,7 +58,7 @@ export const App = observer(() => {
                 <Route path="/new_password" element={<NewPasswordPage />}/>
                 <Route path="/property/details/:id" element={<PropertyDetails />}/>
                 <Route path="/dashboard" element={<PrivateRoute component={<ProfilePage />}/>}/>
-                <Route path="/terms" element={<Terms />} />
+                <Route path="/terms" element={<TermsPage />} />
               </Routes>
             </main>
           </Grid>
