@@ -4,10 +4,12 @@ import {
   CardActions,
   CardContent,
   Divider,
-  Typography
+  Typography,
+  Grid
 } from '@mui/material';
 import { useUserStore } from '../../contexts/UserContext';
 import Button from '../button';
+import Paper from '../paper';
 
 
 
@@ -30,7 +32,7 @@ export const DetailsSection = (props) => {
           variant="text"
           href={`mailto:${seller.email}`}
         >
-          Contacter le propriétaire à {seller.email}
+          propriétaire: {seller.email}
         </Button>
       )
     } else {
@@ -48,41 +50,47 @@ export const DetailsSection = (props) => {
   }
 
   return(
-    <Card {...props}>
-      <CardContent>
-        <Box
-          sx={{
-            alignItems: 'center',
-            display: 'flex',
-            flexDirection: 'column'
-          }}
-        >
-          <Typography
-            color="textPrimary"
-            gutterBottom
-            variant="h5"
+    <Card {...props} sx={{marginBottom: '100px'}}>
+      <Paper
+        background='light'
+      >
+        <CardContent>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column'
+            }}
           >
-            {property.title}
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="body2"
-          >
-            {`${price}`}
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="body1"
-            mt={4}
-          >
-            {property.description}
-          </Typography>
-        </Box>
-      </CardContent>
-      <Divider />
-      <CardActions>
-        <ContactButton />
-      </CardActions>
+            <Grid alignSelf='center' height={{xs: '300px', md: '500px', xl: '600px'}} mb={10}>
+            <img src={property.picture_url ? property.picture_url : '/assets/properties/default.jpg'} style={{height: '100%'}}></img>
+            </Grid>
+            <Typography
+              color="textPrimary"
+              gutterBottom
+              variant="h5"
+            >
+              {property.title}
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body2"
+            >
+              {`${price}`}
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body1"
+              mt={4}
+            >
+              {property.description}
+            </Typography>
+          </Box>
+        </CardContent>
+        <Divider />
+        <CardActions>
+          <ContactButton />
+        </CardActions>
+      </Paper>
     </Card>
   )
 };

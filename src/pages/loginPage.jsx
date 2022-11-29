@@ -19,7 +19,7 @@ export const LoginPage = observer(() => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    userStore.authenticated ? navigate(-1) : '';
+    userStore.authenticated ? navigate('/') : '';
   }, [userStore.authenticated])
   
   const validate = (values) => {

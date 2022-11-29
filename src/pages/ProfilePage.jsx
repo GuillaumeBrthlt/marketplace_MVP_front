@@ -11,13 +11,15 @@ import { PropertiesListOwner } from '../components/PropertiesListOwner';
 import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
 import { useUserStore } from '../contexts/UserContext'
+import RFUploadField from '../components/form/RFUploadField';
+import Resizer from 'react-image-file-resizer'
 
 export const ProfilePage = observer(() => {
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState('')
-  const userStore = useUserStore()
   const propertyStore = usePropertyStore()
+  const [picture, setPicture] = useState(undefined)
 
   const validate = (values) => {
     const errors = required(['title', 'price', 'description'], values);
@@ -32,14 +34,27 @@ export const ProfilePage = observer(() => {
   }; 
 
   const handleSubmit = () => {
-	const loginData = {
-	'title': title,
-	'price': price,
-	'description': description,
-	  }
-	propertyStore.createProperty(loginData)
+    const data = new FormData()
+    data.append("property[title]", title)
+    data.append("property[price]", price)
+    data.append("property[description]", description)
+    data.append("property[picture]", picture)
+    console.log(data)
+    propertyStore.createProperty(data)
 	};
 
+  const resizeFile = (file) => new Promise(resolve => {
+    Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0,
+    uri => {
+      resolve(uri);
+    }, 'file' );
+  });
+
+  const handlePicture = async (event) => {
+    const file = event.target.files[0];
+    const resizedImage = await resizeFile(file);
+    setPicture(resizedImage)
+  }     
 
   return (
     <React.Fragment>
@@ -95,6 +110,18 @@ export const ProfilePage = observer(() => {
                   autoComplete="description"
                   label="Description"
                   margin="normal"
+                />
+              </div>
+              <div type="input" onChange={handlePicture}>
+                <Field
+                  fullWidth
+                  size='large'
+                  type='file'
+                  component={RFUploadField}
+                  disabled={submitting}
+                  name='picture'
+                  label='photo'
+                  margin='normal'
                 />
               </div>
               <FormSpy subscription={{ submitError: true }}>
