@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import {useState} from 'react'
@@ -8,6 +8,7 @@ import {required} from '../components/form/validation'
 import AppForm from '../components/form/appForm'
 import Typography from '../components/typography';
 import RFTextField from '../components/form/RFTextField';
+import TextField from '../components/textField';
 import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
 import { useUserStore } from '../contexts/UserContext'
@@ -16,32 +17,299 @@ export const EditPropertyPage = observer(() => {
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState('')
+  const [address, setAddress] = useState('')
+  const [city, setCity] = useState('')
+  const [zipcode, setZipcode] = useState(0)
+  const [aera, setAera] = useState(0)
+  const [rooms, setRooms] = useState(0)
+  const [furnished, setFurnished] = useState(true)
+  const [carPark, setCarPark] = useState(true)
+  const [outside, setOutside] = useState(true)
+  const [basement, setBasement] = useState(true)
   const userStore = useUserStore()
   const propertyStore = usePropertyStore()
+  const property = propertyStore.propertyDetails.attributes
   const navigate = useNavigate()
   const {id} = useParams()
 
-/* 
-  const validate = (values) => {
-    const errors = required(['title', 'price', 'description'], values);
 
-    if (!errors.title || !errors.price || !errors.description) {
-      return (errors)
-    }
-    return errors;
-  }; 
- */
+  useEffect(() => {
+    propertyStore.setPropertyDetails(id) 
+  }, [id])
 
   const handleSubmit = () => {
 	const loginData = {
 	'title': title,
 	'price': price,
 	'description': description,
+  'address' : address,
+  'city' : city,
+  'zipcode': zipcode,
+  'aera': aera,
+  'rooms': rooms,
+  'furnished': furnished,
+  'car_park': carPark,
+  'has_outside': outside,
+  'basement': basement
 	}
 	propertyStore.editProperty(loginData, id)
-  navigate("/");
+  navigate("/dashboard");
 	};
 
+
+  const formOptions = [
+    { value: true , name: 'Oui', code: 'true' },
+    { value: false, name: 'Non', code: 'false' }
+  ]
+  
+  const validate = (values) => {
+    const errors = required(['title', 'price', 'description', 'address',
+                          'city', 'zipcode', 'aera', 'rooms'], values);
+
+    if (!errors.title || !errors.price || !errors.description ||
+        !errors.address || !errors.city || !errors.zipcode || !errors.aera ||
+        !errors.rooms) {
+      return (errors)
+    }
+
+    return errors;
+  }; 
+
+ 
+
+
+
+  return (
+    <React.Fragment>
+      <AppForm>
+        <React.Fragment>
+          <Typography variant="h3" gutterBottom marked="center" align="center">
+            Enregistrer votre annonce
+          </Typography>
+        </React.Fragment>
+        <Form
+          onSubmit={handleSubmit}
+          subscription={{ submitting: true }}
+          validate={validate}
+        >
+          {({ handleSubmit: handleSubmit2, submitting }) => (
+            <Box component="form" onSubmit={handleSubmit2} noValidate sx={{ mt: 6 }}>
+              <div type="input" onChange={e => setTitle(e.target.value)}>
+                <Field
+                  fullWidth
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="title"
+                  autoComplete="title"
+                  label="Titre de votre annonce"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setPrice(e.target.value)}>
+                <Field
+                  fullWidth
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="price"
+                  autoComplete="price"
+                  label="Prix de votre bien"
+                  margin="normal"
+                />
+              </div>              
+              <div type="input" onChange={e => setDescription(e.target.value)}>
+                <Field
+                  fullWidth
+                  multiline
+                  rows={5}
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="description"
+                  autoComplete="description"
+                  label="Description"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setAddress(e.target.value)}>
+                <Field
+                  fullWidth
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="address"
+                  autoComplete="123 abc street"
+                  label="Adresse du bien"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setCity(e.target.value)}>
+                <Field
+                  fullWidth
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="city"
+                  autoComplete="ville"
+                  label="Ville de votre bien"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setZipcode(e.target.value)}>
+                <Field
+                  fullWidth
+                  type="number"
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="zipcode"
+                  autoComplete="75000"
+                  label="Code postal"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setAera(e.target.value)}>
+                <Field
+                  fullWidth
+                  type="number"
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="aera"
+                  autoComplete="50"
+                  label="Surface en m²"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setRooms(e.target.value)}>
+                <Field
+                  fullWidth
+                  type="number"
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="rooms"
+                  autoComplete="4"
+                  label="Nombre de pièces"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setFurnished(e.target.value)}>
+                <TextField
+                  select
+                  fullWidth
+                  size="medium"
+                  variant="standard"
+                  name="furnished"
+                  label="Meublé ?"
+                  SelectProps={{
+                    native: true,
+                  }}
+                  sx={{ mt: 1, width: 150 }}
+                >
+                  {formOptions.map((option) => (
+                    <option value={option.value} key={option.code}>
+                      {option.name}
+                    </option>
+                  ))}
+                </TextField>
+              </div>
+              <div type="input" onChange={e => setCarPark(e.target.value)}>
+                <TextField
+                  select
+                  fullWidth
+                  size="medium"
+                  variant="standard"
+                  name="carPark"
+                  label="Parking ?"
+                  SelectProps={{
+                    native: true,
+                  }}
+                  sx={{ mt: 1, width: 150 }}
+                >
+                  {formOptions.map((option) => (
+                    <option value={option.value} key={option.code}>
+                      {option.name}
+                    </option>
+                  ))}
+                </TextField>
+              </div>
+              <div type="input" onChange={e => setOutside(e.target.value)}>
+                <TextField
+                  select
+                  fullWidth
+                  size="medium"
+                  variant="standard"
+                  name="outside"
+                  label="Jardin/balcon/terrasse ?"
+                  SelectProps={{
+                    native: true,
+                  }}
+                  sx={{ mt: 1, width: 150 }}
+                >
+                  {formOptions.map((option) => (
+                    <option value={option.value} key={option.code}>
+                      {option.name}
+                    </option>
+                  ))}
+                </TextField>
+              </div>
+              <div type="input" onChange={e => setBasement(e.target.value)}>
+                <TextField
+                  select
+                  fullWidth
+                  size="medium"
+                  variant="standard"
+                  name="basement"
+                  label="Sous-sol ?"
+                  SelectProps={{
+                    native: true,
+                  }}
+                  sx={{ mt: 1, width: 150 }}
+                >
+                  {formOptions.map((option) => (
+                    <option value={option.value} key={option.code}>
+                      {option.name}
+                    </option>
+                  ))}
+                </TextField>
+              </div>
+            <FormSpy subscription={{ submitError: true }}>
+                {({ submitError }) =>
+                  submitError ? (
+                    <FormFeedback error sx={{ mt: 2 }}>
+                      {submitError}
+                    </FormFeedback>
+                  ) : null
+                }
+              </FormSpy>
+              <FormButton
+                sx={{ mt: 3, mb: 2 }}
+                disabled={submitting}
+                size="large"
+                color="secondary"
+                fullWidth
+              >
+                {submitting ? 'En cours…' : "Confirmer"}
+              </FormButton>
+            </Box>
+          )}
+        </Form>
+      </AppForm>
+    </React.Fragment>
+  )
+})
+
+/* 
   return (
     <React.Fragment>
       <AppForm>
@@ -49,9 +317,6 @@ export const EditPropertyPage = observer(() => {
           <Typography variant="h3" gutterBottom marked="center" align="center">
             Modifier votre annonce
           </Typography>          
-          <Typography variant="h3" gutterBottom marked="center" align="center">
-            {id}
-          </Typography>
         </React.Fragment>
         <Form
           onSubmit={handleSubmit}
@@ -67,7 +332,6 @@ export const EditPropertyPage = observer(() => {
                   component={RFTextField}
                   disabled={submitting}
                   required
-                  value = {title}
                   name="title"
                   autoComplete="title"
                   label="Titre de votre annonce"
@@ -126,4 +390,4 @@ export const EditPropertyPage = observer(() => {
       </AppForm>
     </React.Fragment>
   )
-})
+}) */

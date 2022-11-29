@@ -4,14 +4,13 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
 import Typography from '../typography';
-import TextField from '../textField';
 
 function Copyright() {
   return (
     <React.Fragment>
       {'© '}
       <Link color="inherit" href="https://www.devalamer.fr/">
-        Fabulous_Vocal15
+        Fabulous Vocal 15
       </Link>{' '}
       {new Date().getFullYear()}
     </React.Fragment>
@@ -86,26 +85,6 @@ export default function AppFooter() {
                 <Link href="/terms_privacy/">Terms & Privacy</Link>
               </Box>
             </Box>
-          </Grid>
-          <Grid item xs={6} sm={8} md={4}>
-            <Typography variant="h6" marked="left" gutterBottom>
-              Language
-            </Typography>
-            <TextField
-              select
-              size="medium"
-              variant="standard"
-              SelectProps={{
-                native: true,
-              }}
-              sx={{ mt: 1, width: 150 }}
-            >
-              {LANGUAGES.map((language) => (
-                <option value={language.code} key={language.code}>
-                  {language.name}
-                </option>
-              ))}
-            </TextField>
           </Grid>
         </Grid>
       </Container>
