@@ -11,33 +11,61 @@ import { PropertiesListOwner } from '../components/PropertiesListOwner';
 import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
 import { useUserStore } from '../contexts/UserContext'
+import TextField from '../components/textField';
 
 export const ProfilePage = observer(() => {
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState('')
+  const [address, setAddress] = useState('')
+  const [city, setCity] = useState('')
+  const [zipcode, setZipcode] = useState(0)
+  const [aera, setAera] = useState(0)
+  const [rooms, setRooms] = useState(0)
+  const [furnished, setFurnished] = useState(null)
+  const [carPark, setCarPark] = useState(null)
+  const [outside, setOutside] = useState(null)
+  const [basement, setBasement] = useState(null)
+  
   const userStore = useUserStore()
   const propertyStore = usePropertyStore()
 
+  const formOptions = [
+    { value: true , name: 'Oui', code: 'true' },
+    { value: false, name: 'Non', code: 'false' }
+  ]
+  
   const validate = (values) => {
-    const errors = required(['title', 'price', 'description'], values);
+    const errors = required(['title', 'price', 'description', 'address',
+                          'city', 'zipcode', 'aera', 'rooms', 'furnished',
+                          'carPark', 'outside', 'basement'], values);
 
-    if (!errors.title || !errors.price || !errors.description) {
+    if (!errors.title || !errors.price || !errors.description ||
+        !errors.address || !errors.city || !errors.zipcode || !errors.aera ||
+        !errors.rooms || !errors.furnished || !errors.carPark || !errors.outside ||
+        !errors.basement) {
       return (errors)
     }
-/*     if (errors.price.typeof() === String) {
-      return "il faut des chiffres"
-    } */
+
     return errors;
   }; 
 
   const handleSubmit = () => {
-	const loginData = {
-	'title': title,
-	'price': price,
-	'description': description,
-	  }
-	propertyStore.createProperty(loginData)
+    const loginData = {
+      'title': title,
+      'price': price,
+      'description': description,
+      'address': address,
+      'city': city,
+      'zipcode': zipcode,
+      'aera': aera,
+      'rooms': rooms,
+      'furnished': furnished,
+      'car_park': carPark,
+      'has_outside': outside,
+      'basement': basement
+    }
+    propertyStore.createProperty(loginData)
 	};
 
 
@@ -96,6 +124,154 @@ export const ProfilePage = observer(() => {
                   label="Description"
                   margin="normal"
                 />
+              </div>
+              <div type="input" onChange={e => setAddress(e.target.value)}>
+                <Field
+                  fullWidth
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="address"
+                  autoComplete="123 abc street"
+                  label="Adresse du bien"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setCity(e.target.value)}>
+                <Field
+                  fullWidth
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="city"
+                  autoComplete="ville"
+                  label="Ville de votre bien"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setZipcode(e.target.value)}>
+                <Field
+                  fullWidth
+                  type="number"
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="zipcode"
+                  autoComplete="75000"
+                  label="Code postal"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setAera(e.target.value)}>
+                <Field
+                  fullWidth
+                  type="number"
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="aera"
+                  autoComplete="50"
+                  label="Surface"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setRooms(e.target.value)}>
+                <Field
+                  fullWidth
+                  type="number"
+                  size="large"
+                  component={RFTextField}
+                  disabled={submitting}
+                  required
+                  name="rooms"
+                  autoComplete="4"
+                  label="Nombre de pièces"
+                  margin="normal"
+                />
+              </div>
+              <div type="input" onChange={e => setFurnished(e.target.value)}>
+                <TextField
+                  select
+                  fullWidth
+                  size="normal"
+                  variant="standard"
+                  name="furnished"
+                  label="Meublé ?"
+                  SelectProps={{
+                    native: null,
+                  }}
+                  sx={{ mt: 1, width: 150 }}
+                >
+                  {formOptions.map((option) => (
+                    <option value={option.value} key={option.code}>
+                      {option.name}
+                    </option>
+                  ))}
+                </TextField>
+              </div>
+              <div type="input" onChange={e => setCarPark(e.target.value)}>
+                <TextField
+                  select
+                  fullWidth
+                  size="normal"
+                  variant="standard"
+                  name="carPark"
+                  label="Parking ?"
+                  SelectProps={{
+                    native: null,
+                  }}
+                  sx={{ mt: 1, width: 150 }}
+                >
+                  {formOptions.map((option) => (
+                    <option value={option.value} key={option.code}>
+                      {option.name}
+                    </option>
+                  ))}
+                </TextField>
+              </div>
+              <div type="input" onChange={e => setOutside(e.target.value)}>
+                <TextField
+                  select
+                  fullWidth
+                  size="normal"
+                  variant="standard"
+                  name="outside"
+                  label="Jardin/balcon/terrasse ?"
+                  SelectProps={{
+                    native: null,
+                  }}
+                  sx={{ mt: 1, width: 150 }}
+                >
+                  {formOptions.map((option) => (
+                    <option value={option.value} key={option.code}>
+                      {option.name}
+                    </option>
+                  ))}
+                </TextField>
+              </div>
+              <div type="input" onChange={e => setBasement(e.target.value)}>
+                <TextField
+                  select
+                  fullWidth
+                  size="normal"
+                  variant="standard"
+                  name="basement"
+                  label="Sous-sol ?"
+                  SelectProps={{
+                    native: null,
+                  }}
+                  sx={{ mt: 1, width: 150 }}
+                >
+                  {formOptions.map((option) => (
+                    <option value={option.value} key={option.code}>
+                      {option.name}
+                    </option>
+                  ))}
+                </TextField>
               </div>
               <FormSpy subscription={{ submitError: true }}>
                 {({ submitError }) =>
