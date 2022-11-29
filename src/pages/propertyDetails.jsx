@@ -1,4 +1,4 @@
-import Typography from '../components/Typography'
+import Typography from '../components/typography'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
