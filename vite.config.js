@@ -1,7 +1,12 @@
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import Markdown from "vite-plugin-react-markdown";
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()]
-})
+
+export default {
+  plugins: [
+    Markdown(),
+    react({
+      include: [/\.tsx$/, /\.md$/], // <-- add .md 
+    }),
+  ],
+};
