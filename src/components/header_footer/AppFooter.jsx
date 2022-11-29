@@ -11,7 +11,7 @@ function Copyright() {
     <React.Fragment>
       {'© '}
       <Link color="inherit" href="https://www.devalamer.fr/">
-        Fabulous_Vocal15
+        Fabulous Vocal 15
       </Link>{' '}
       {new Date().getFullYear()}
     </React.Fragment>
