@@ -72,8 +72,6 @@ export const ProfilePage = observer(() => {
     navigate("/");
 	};
 
-
-
   return (
     <React.Fragment>
       <AppForm>
