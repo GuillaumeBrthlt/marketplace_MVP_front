@@ -23,10 +23,10 @@ export const ProfilePage = observer(() => {
   const [zipcode, setZipcode] = useState(0)
   const [aera, setAera] = useState(0)
   const [rooms, setRooms] = useState(0)
-  const [furnished, setFurnished] = useState(null)
-  const [carPark, setCarPark] = useState(null)
-  const [outside, setOutside] = useState(null)
-  const [basement, setBasement] = useState(null)
+  const [furnished, setFurnished] = useState(true)
+  const [carPark, setCarPark] = useState(true)
+  const [outside, setOutside] = useState(true)
+  const [basement, setBasement] = useState(true)
   
   const userStore = useUserStore()
   const propertyStore = usePropertyStore()
@@ -39,13 +39,11 @@ export const ProfilePage = observer(() => {
   
   const validate = (values) => {
     const errors = required(['title', 'price', 'description', 'address',
-                          'city', 'zipcode', 'aera', 'rooms', 'furnished',
-                          'carPark', 'outside', 'basement'], values);
+                          'city', 'zipcode', 'aera', 'rooms'], values);
 
     if (!errors.title || !errors.price || !errors.description ||
         !errors.address || !errors.city || !errors.zipcode || !errors.aera ||
-        !errors.rooms || !errors.furnished || !errors.carPark || !errors.outside ||
-        !errors.basement) {
+        !errors.rooms) {
       return (errors)
     }
 
@@ -178,7 +176,7 @@ export const ProfilePage = observer(() => {
                   required
                   name="aera"
                   autoComplete="50"
-                  label="Surface"
+                  label="Surface en m²"
                   margin="normal"
                 />
               </div>
@@ -200,12 +198,12 @@ export const ProfilePage = observer(() => {
                 <TextField
                   select
                   fullWidth
-                  size="normal"
+                  size="medium"
                   variant="standard"
                   name="furnished"
                   label="Meublé ?"
                   SelectProps={{
-                    native: null,
+                    native: true,
                   }}
                   sx={{ mt: 1, width: 150 }}
                 >
@@ -220,12 +218,12 @@ export const ProfilePage = observer(() => {
                 <TextField
                   select
                   fullWidth
-                  size="normal"
+                  size="medium"
                   variant="standard"
                   name="carPark"
                   label="Parking ?"
                   SelectProps={{
-                    native: null,
+                    native: true,
                   }}
                   sx={{ mt: 1, width: 150 }}
                 >
@@ -240,12 +238,12 @@ export const ProfilePage = observer(() => {
                 <TextField
                   select
                   fullWidth
-                  size="normal"
+                  size="medium"
                   variant="standard"
                   name="outside"
                   label="Jardin/balcon/terrasse ?"
                   SelectProps={{
-                    native: null,
+                    native: true,
                   }}
                   sx={{ mt: 1, width: 150 }}
                 >
@@ -260,12 +258,12 @@ export const ProfilePage = observer(() => {
                 <TextField
                   select
                   fullWidth
-                  size="normal"
+                  size="medium"
                   variant="standard"
                   name="basement"
                   label="Sous-sol ?"
                   SelectProps={{
-                    native: null,
+                    native: true,
                   }}
                   sx={{ mt: 1, width: 150 }}
                 >
