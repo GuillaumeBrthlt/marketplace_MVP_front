@@ -58,7 +58,9 @@ export const ProfilePage = observer(() => {
     data.append("property[title]", title)
     data.append("property[price]", price)
     data.append("property[description]", description)
-    data.append("property[picture]", picture)
+    if (picture) {
+      data.append("property[picture]", picture)
+    }
     data.append("property[address]", address)
     data.append("property[city]", city)
     data.append("property[zipcode]", zipcode)

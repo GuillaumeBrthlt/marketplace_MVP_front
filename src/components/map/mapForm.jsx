@@ -2,7 +2,6 @@ import GetMap from "./map";
 import { useState, useEffect } from "react";
 import { usePropertyStore } from '../../contexts/PropertyContext';
 import { observer } from "mobx-react-lite";
-import { useParams } from 'react-router-dom'
 
 export const Map = observer(() => {
 
@@ -12,34 +11,15 @@ export const Map = observer(() => {
   });
   const [display_name, setName] = useState();
   const [address, setAddress] = useState({});
-  const { id } = useParams()
   const propertyStore = usePropertyStore()
 
-  useEffect(() => {
-    propertyStore.setPropertyDetails(id) 
-  }, [id])
 
   useEffect(() => {
-    if(propertyStore.propertyDetails.id) {
-      propertyStore.setSellerDetails(propertyStore.propertyDetails.user_id)
-    }
-  }, [propertyStore.propertyDetails])
-
-  if (propertyStore.sellerDetails.id == null) {
-    return (
-      <div>Chargement...</div>
-    )
-  } 
-
-  const property = propertyStore.propertyDetails
-
-
-  useEffect(() => {
-    console.log(property)
+    console.log(propertyStore.propertyDetails)
     let url = `https://nominatim.openstreetmap.org/search?
-    street=${property.address}
-    &city=${property.city}
-    &postalcode=${property.zipcode}&format=json`;
+    street=${propertyStore.address}
+    &city=${propertyStore.city}
+    &postalcode=${propertyStore.zipcode}&format=json`;
     getData(url);
   }, []);
 
