@@ -67,6 +67,7 @@ export const ProfilePage = observer(() => {
       'basement': basement
     }
     propertyStore.createProperty(propertyData)
+    console.log(propertyData)
     navigate("/");
 	};
 

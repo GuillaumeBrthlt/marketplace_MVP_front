@@ -1,7 +1,10 @@
 import GetMap from "./map";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePropertyStore } from '../../contexts/PropertyContext';
+import { observer } from "mobx-react-lite";
+import { useParams } from 'react-router-dom'
 
-export default function Map() {
+export const Map = observer(() => {
 
   const [coords, setCorrds] = useState({
     latitude: "",
@@ -9,6 +12,36 @@ export default function Map() {
   });
   const [display_name, setName] = useState();
   const [address, setAddress] = useState({});
+  const { id } = useParams()
+  const propertyStore = usePropertyStore()
+
+  useEffect(() => {
+    propertyStore.setPropertyDetails(id) 
+  }, [id])
+
+  useEffect(() => {
+    if(propertyStore.propertyDetails.id) {
+      propertyStore.setSellerDetails(propertyStore.propertyDetails.user_id)
+    }
+  }, [propertyStore.propertyDetails])
+
+  if (propertyStore.sellerDetails.id == null) {
+    return (
+      <div>Chargement...</div>
+    )
+  } 
+
+  const property = propertyStore.propertyDetails
+
+
+  useEffect(() => {
+    console.log(property)
+    let url = `https://nominatim.openstreetmap.org/search?
+    street=${property.address}
+    &city=${property.city}
+    &postalcode=${property.zipcode}&format=json`;
+    getData(url);
+  }, []);
 
   function error(err) {
     if (
@@ -55,12 +88,10 @@ export default function Map() {
   //set form input( data entered ) to state on form submit
   function submitHandler(e) {
     e.preventDefault();
-    console.log(address);
 
     let url = `https://nominatim.openstreetmap.org/search?
     street=${address.street}
     &city=${address.city}
-    &country=${address.country}
     &postalcode=${address.postalcode}&format=json`;
     setName(address.city)
     getData(url);
@@ -96,19 +127,10 @@ export default function Map() {
             id="postalcode"
           />
           <br />
-          <label>Pays:</label>
-          <input
-            placeholder="France"
-            type="text"
-            value={address.country || ""}
-            onChange={update("country")}
-            id="country"
-          />
-          <br />
           <button onClick={(e) => submitHandler(e)}>Search</button>
         </form>
       </section>
       <GetMap coords={coords} dispaly_name={display_name} />
     </div>
   );
-}
+})
