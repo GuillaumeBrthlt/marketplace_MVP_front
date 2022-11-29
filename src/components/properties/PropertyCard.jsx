@@ -6,6 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import Button from '../button';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
+import Paper from '../paper';
+import {CardMedia} from '@mui/material';
 
 const bull = (
   <Box
@@ -28,23 +30,39 @@ export default function PropertyCard({ property }) {
   
 
   return (
+    
     <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Typography variant="h5" component="div">
-          {property.title}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {price}
-        </Typography>
-        <Typography variant="body2">
-          {property.description}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Link to={linkToDetails}>
-          <Button size="small">En savoir plus</Button>
-        </Link>
-      </CardActions>
+      <Paper
+        background="light"
+      >
+        <CardMedia
+          component='img'
+          height='300'
+          image={property.picture_url ? property.picture_url : 'assets/properties/default.jpg'} 
+        />
+        <CardContent>
+          <Typography variant="h5" component="div">
+            {property.title}
+          </Typography>
+          <Typography sx={{ mb: 1.5 }} color="text.secondary" >
+            {price}
+          </Typography>
+          <Typography variant="body2">
+            {property.description}
+          </Typography>
+        </CardContent>    
+        <CardActions>
+          <Link to={linkToDetails} style={{textDecoration: 'none', width: '100%'}}>
+            <Button 
+              size="small"
+              color='secondary'
+              fullWidth
+            >
+              En savoir plus
+            </Button>
+          </Link>
+        </CardActions>
+      </Paper>
     </Card>
   )
 }

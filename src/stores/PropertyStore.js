@@ -14,6 +14,15 @@ export function createPropertyStore() {
       title: null,
       description: null,
       user_id: null,
+      address: null,
+      city: null,
+      zipcode: null,
+      aera: null,
+      rooms: null,
+      furnished: true,
+      car_park: true,
+      has_outside: true,
+      basement: true
     },
     sellerDetails: {
       id: null,

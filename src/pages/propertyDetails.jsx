@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { DetailsSection } from '../components/properties/detailsSection'
 import { usePropertyStore } from '../contexts/PropertyContext'
-import  Map  from '../components/map/mapForm'
+import { Map } from '../components/map/mapForm'
 import { Grid } from '@mui/material'
 
 export const PropertyDetails = observer(() => {
@@ -17,7 +17,7 @@ export const PropertyDetails = observer(() => {
 
   useEffect(() => {
     if(propertyStore.propertyDetails.id) {
-      propertyStore.setSellerDetails(propertyStore.propertyDetails.user_id)
+      propertyStore.setSellerDetails(propertyStore.propertyDetails.attributes.user_id)
     }
   }, [propertyStore.propertyDetails])
 
@@ -27,7 +27,7 @@ export const PropertyDetails = observer(() => {
     )
   } 
 
-  const property = propertyStore.propertyDetails
+  const property = propertyStore.propertyDetails.attributes
   const seller = propertyStore.sellerDetails
      
   return (

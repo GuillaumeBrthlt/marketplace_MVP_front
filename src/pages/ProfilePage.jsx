@@ -12,12 +12,16 @@ import { PropertiesListOwner } from '../components/properties/PropertiesListOwne
 import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
 import { useUserStore } from '../contexts/UserContext'
+import RFUploadField from '../components/form/RFUploadField';
+import Resizer from 'react-image-file-resizer'
 import TextField from '../components/textField';
 
 export const ProfilePage = observer(() => {
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState(0)
   const [description, setDescription] = useState('')
+  const propertyStore = usePropertyStore()
+  const [picture, setPicture] = useState(undefined)
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
   const [zipcode, setZipcode] = useState(0)
@@ -29,7 +33,6 @@ export const ProfilePage = observer(() => {
   const [basement, setBasement] = useState(true)
   
   const userStore = useUserStore()
-  const propertyStore = usePropertyStore()
   const navigate = useNavigate()
 
   const formOptions = [
@@ -51,23 +54,36 @@ export const ProfilePage = observer(() => {
   }; 
 
   const handleSubmit = () => {
-    const propertyData = {
-      'title': title,
-      'price': price,
-      'description': description,
-      'address': address,
-      'city': city,
-      'zipcode': zipcode,
-      'aera': aera,
-      'rooms': rooms,
-      'furnished': furnished,
-      'car_park': carPark,
-      'has_outside': outside,
-      'basement': basement
-    }
-    propertyStore.createProperty(propertyData)
-    navigate("/");
+    const data = new FormData()
+    data.append("property[title]", title)
+    data.append("property[price]", price)
+    data.append("property[description]", description)
+    data.append("property[picture]", picture)
+    data.append("property[address]", address)
+    data.append("property[city]", city)
+    data.append("property[zipcode]", zipcode)
+    data.append("property[aera]", aera)
+    data.append("property[rooms]", rooms)
+    data.append("property[furnished]", furnished)
+    data.append("property[car_park]", carPark)
+    data.append("property[has_outside]", outside)
+    data.append("property[basement]", basement)
+    console.log(data)
+    propertyStore.createProperty(data)
 	};
+
+  const resizeFile = (file) => new Promise(resolve => {
+    Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0,
+    uri => {
+      resolve(uri);
+    }, 'file' );
+  });
+
+  const handlePicture = async (event) => {
+    const file = event.target.files[0];
+    const resizedImage = await resizeFile(file);
+    setPicture(resizedImage)
+  }     
 
   return (
     <React.Fragment>
@@ -272,6 +288,18 @@ export const ProfilePage = observer(() => {
                     </option>
                   ))}
                 </TextField>
+              </div>
+              <div type="input" onChange={handlePicture}>
+                <Field
+                  fullWidth
+                  size='large'
+                  type='file'
+                  component={RFUploadField}
+                  disabled={submitting}
+                  name='picture'
+                  label='photo'
+                  margin='normal'
+                />
               </div>
               <FormSpy subscription={{ submitError: true }}>
                 {({ submitError }) =>
