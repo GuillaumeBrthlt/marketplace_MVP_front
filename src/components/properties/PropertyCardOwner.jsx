@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePropertyStore } from '../../contexts/PropertyContext';
 import { useUserStore } from '../../contexts/UserContext';
+import { useEffect } from 'react';
 
 const bull = (
   <Box
@@ -25,6 +26,7 @@ export default function PropertyCard({ property }) {
   const propertyStore = usePropertyStore()
   const userStore = useUserStore()
   const navigate = useNavigate()
+
 
 
   const deleteThisProperty = () => {

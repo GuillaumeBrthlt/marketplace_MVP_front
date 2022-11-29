@@ -1,11 +1,11 @@
 import {useEffect} from 'react'
-import PropertyCardOwner from './properties/PropertyCardOwner';
+import PropertyCardOwner from '../../components/properties/PropertyCardOwner'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Typography from '../components/Typography';
+import Typography from '../../components/typography';
 import { observer } from 'mobx-react-lite';
-import { usePropertyStore } from '../contexts/PropertyContext'
-import { useUserStore } from '../contexts/UserContext'
+import { usePropertyStore } from '../../contexts/PropertyContext'
+import { useUserStore } from '../../contexts/UserContext'
 
 
 export const PropertiesListOwner = observer(() => {

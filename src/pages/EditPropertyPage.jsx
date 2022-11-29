@@ -8,7 +8,6 @@ import {required} from '../components/form/validation'
 import AppForm from '../components/form/appForm'
 import Typography from '../components/Typography';
 import RFTextField from '../components/form/RFTextField';
-import { PropertiesListOwner } from '../components/PropertiesListOwner';
 import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
 import { useUserStore } from '../contexts/UserContext'
@@ -32,6 +31,7 @@ export const EditPropertyPage = observer(() => {
     return errors;
   }; 
  */
+
   const handleSubmit = () => {
 	const loginData = {
 	'title': title,

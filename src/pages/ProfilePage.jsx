@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import {useState} from 'react'
@@ -8,7 +8,7 @@ import {required} from '../components/form/validation'
 import AppForm from '../components/form/appForm'
 import Typography from '../components/Typography';
 import RFTextField from '../components/form/RFTextField';
-import { PropertiesListOwner } from '../components/PropertiesListOwner';
+import { PropertiesListOwner } from '../components/properties/PropertiesListOwner';
 import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
 import { useUserStore } from '../contexts/UserContext'
@@ -33,15 +33,17 @@ export const ProfilePage = observer(() => {
     return errors;
   }; 
 
+
   const handleSubmit = () => {
-	const loginData = {
+	const propertyData = {
 	'title': title,
 	'price': price,
 	'description': description,
 	}
-	propertyStore.createProperty(loginData)
+	propertyStore.createProperty(propertyData)
   navigate("/");
 	};
+
 
 
   return (
