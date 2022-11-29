@@ -1,20 +1,26 @@
-import PropertyCard from './properties/PropertyCard';
+import {useEffect} from 'react'
+import PropertyCardOwner from '../../components/properties/PropertyCardOwner'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Typography from '../components/typography';
+import Typography from '../../components/typography';
 import { observer } from 'mobx-react-lite';
-import { usePropertyStore } from '../contexts/PropertyContext'
-import { useUserStore } from '../contexts/UserContext'
+import { usePropertyStore } from '../../contexts/PropertyContext'
+import { useUserStore } from '../../contexts/UserContext'
 
 
 export const PropertiesListOwner = observer(() => {
   const propertyStore = usePropertyStore()
   const userStore = useUserStore()
   let propertySeller = propertyStore.properties.filter((property) => property.user_id === userStore.user.id)
-    const displayCards = propertySeller.map((property) =>{
+
+  useEffect(() => {
+    propertyStore.getProperties()
+  }, [])
+
+  const displayCards = propertySeller.map((property) =>{
       return (
         <Grid item xs={2} sm={4} md={4} key={property.id}>
-        <PropertyCard property={property} />
+        <PropertyCardOwner property={property} />
       </Grid>
       )
     })
