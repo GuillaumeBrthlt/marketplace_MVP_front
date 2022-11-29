@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { DetailsSection } from '../components/properties/detailsSection'
 import { usePropertyStore } from '../contexts/PropertyContext'
-import  Map  from '../components/map/mapForm'
+import { Map } from '../components/map/mapForm'
 import { Grid } from '@mui/material'
 
 export const PropertyDetails = observer(() => {
