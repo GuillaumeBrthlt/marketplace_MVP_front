@@ -28,6 +28,7 @@ export function createPropertyStore() {
       id: null,
       email: null,
     },
+    cities: null,
 
     async getProperties() {
       runInAction(() => {
@@ -41,6 +42,9 @@ export function createPropertyStore() {
           runInAction(() => {
             this.loading = false
             this.properties = data
+            let cities = []
+            data.map(property => cities.push(property.attributes.city))
+            this.cities = cities
           })
         }    
       } catch(error) {
