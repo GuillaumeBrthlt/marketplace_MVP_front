@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import {useState} from 'react'
