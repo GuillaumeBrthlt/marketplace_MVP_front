@@ -17,7 +17,7 @@ export function Map({property}) {
     &city=${property.city}
     &postalcode=${property.zipcode}&format=json`;
     getData(url);
-  }, []);
+  }, [property]);
 
   function error(err) {
     if (
