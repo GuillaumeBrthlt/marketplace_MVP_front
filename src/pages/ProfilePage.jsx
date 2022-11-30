@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite'
 import {useState} from 'react'
 import { Field, Form, FormSpy } from 'react-final-form';
 import Box from '@mui/material/Box';
+import Button from '../components/button';
 import {required} from '../components/form/validation'
 import AppForm from '../components/form/appForm'
 import Typography from '../components/typography';
@@ -15,6 +16,7 @@ import { useUserStore } from '../contexts/UserContext'
 import RFUploadField from '../components/form/RFUploadField';
 import Resizer from 'react-image-file-resizer'
 import TextField from '../components/textField';
+import './ProfilePage.css'
 
 export const ProfilePage = observer(() => {
   const [title, setTitle] = useState('')
@@ -31,9 +33,9 @@ export const ProfilePage = observer(() => {
   const [carPark, setCarPark] = useState(true)
   const [outside, setOutside] = useState(true)
   const [basement, setBasement] = useState(true)
-  
-  const userStore = useUserStore()
+  const buttonForm = document.getElementById("form")
   const navigate = useNavigate()
+
 
   const formOptions = [
     { value: true , name: 'Oui', code: 'true' },
@@ -87,8 +89,17 @@ export const ProfilePage = observer(() => {
     setPicture(resizedImage)
   }     
 
+  const toggleForm = () => {
+    buttonForm.className.includes('hidden') ? buttonForm.classList.remove('hidden') : buttonForm.classList.add('hidden')
+  }
+
+
   return (
     <React.Fragment>
+      <Box style={{ display: "flex", justifyContent: "center" }}>
+       <Button sx={{mt: 5 }}  variant="contained"  onClick={toggleForm} id="button">Afficher / Cacher formulaire de création</Button>
+      </Box>
+        <div className="hidden" id="form">
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
@@ -325,7 +336,9 @@ export const ProfilePage = observer(() => {
           )}
         </Form>
       </AppForm>
-      <Typography mt={3} variant="h3" gutterBottom marked="center" align="center">
+      </div>
+
+      <Typography mt={3} variant="h3" gutterBottom marked="center" align="center" sx={{ mt: 3}}>
         La liste de vos annonces:
       </Typography>
         <PropertiesListOwner />   
