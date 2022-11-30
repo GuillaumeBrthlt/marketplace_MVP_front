@@ -33,7 +33,6 @@ export const ProfilePage = observer(() => {
   const [carPark, setCarPark] = useState(true)
   const [outside, setOutside] = useState(true)
   const [basement, setBasement] = useState(true)
-  const buttonForm = document.getElementById("form")
   const navigate = useNavigate()
 
 
@@ -89,15 +88,18 @@ export const ProfilePage = observer(() => {
     setPicture(resizedImage)
   }     
 
+
+
+
   const toggleForm = () => {
+    var buttonForm = document.getElementById("form")
     buttonForm.className.includes('hidden') ? buttonForm.classList.remove('hidden') : buttonForm.classList.add('hidden')
   }
-
 
   return (
     <React.Fragment>
       <Box style={{ display: "flex", justifyContent: "center" }}>
-       <Button sx={{mt: 5 }}  variant="contained"  onClick={toggleForm} id="button">Afficher / Cacher formulaire de création</Button>
+        <Button sx={{mt: 5 }}  variant="contained"  onClick={toggleForm} id="button">Afficher / Cacher formulaire de création</Button>
       </Box>
         <div className="hidden" id="form">
       <AppForm>
