@@ -1,7 +1,6 @@
 import GetMap from "./map";
 import { useState, useEffect } from "react";
-import { usePropertyStore } from '../../contexts/PropertyContext';
-import { observer } from "mobx-react-lite";
+
 
 export function Map({property}) {
 
