@@ -117,14 +117,14 @@ export const DetailsSection = (props) => {
               variant="body1"
               mt={4}
             >
-              Parking : {property.carPark ? "oui" : "non"}
+              Parking : {property.car_park ? "oui" : "non"}
             </Typography>
             <Typography
               color="textSecondary"
               variant="body1"
               mt={4}
             >
-              Extérieur : {property.outside ? "oui" : "non"}
+              Extérieur : {property.has_outside ? "oui" : "non"}
             </Typography>
             <Typography
               color="textSecondary"
