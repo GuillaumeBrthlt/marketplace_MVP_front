@@ -11,24 +11,14 @@ import RFTextField from '../components/form/RFTextField';
 import TextField from '../components/textField';
 import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
-import { useUserStore } from '../contexts/UserContext'
+
 
 export const EditPropertyPage = observer(() => {
-  const [title, setTitle] = useState('')
-  const [price, setPrice] = useState(0)
-  const [description, setDescription] = useState('')
-  const [address, setAddress] = useState('')
-  const [city, setCity] = useState('')
-  const [zipcode, setZipcode] = useState(0)
-  const [aera, setAera] = useState(0)
-  const [rooms, setRooms] = useState(0)
-  const [furnished, setFurnished] = useState(true)
-  const [carPark, setCarPark] = useState(true)
-  const [outside, setOutside] = useState(true)
-  const [basement, setBasement] = useState(true)
-  const userStore = useUserStore()
   const propertyStore = usePropertyStore()
-  const property = propertyStore.propertyDetails.attributes
+  const [furnished, setFurnished] = useState(null)
+  const [basement, setBasement] = useState(null)
+  const [outside, setOutside] = useState(null)
+  const [carPark, setCarPark] = useState(null)
   const navigate = useNavigate()
   const {id} = useParams()
 
@@ -37,23 +27,24 @@ export const EditPropertyPage = observer(() => {
     propertyStore.setPropertyDetails(id) 
   }, [id])
 
-  const handleSubmit = () => {
-	const loginData = {
-	'title': title,
-	'price': price,
-	'description': description,
-  'address' : address,
-  'city' : city,
-  'zipcode': zipcode,
-  'aera': aera,
-  'rooms': rooms,
-  'furnished': furnished,
-  'car_park': carPark,
-  'has_outside': outside,
-  'basement': basement
-	}
-	propertyStore.editProperty(loginData, id)
-  navigate("/dashboard");
+  const handleSubmit = (e) => {
+
+    const editData = {
+      title: e.title,
+      description: e.description,
+      address: e.address,
+      zipcode: parseInt(e.zipcode),
+      city: e.city,
+      aera: parseInt(e.aera),
+      rooms: parseInt(e.rooms),
+      basement: basement != null ? basement : propertyStore.propertyDetails.attributes.basement,
+      furnished: furnished  != null ? furnished : propertyStore.propertyDetails.attributes.furnished,
+      has_outside: outside != null ? outside : propertyStore.propertyDetails.attributes.has_outside,
+      car_park: carPark != null ? carPark : propertyStore.propertyDetails.attributes.car_park
+    }
+  
+    propertyStore.editProperty(editData, id)
+    navigate("/dashboard");
 	};
 
 
@@ -75,8 +66,28 @@ export const EditPropertyPage = observer(() => {
     return errors;
   }; 
 
- 
+  if (!propertyStore.propertyDetails.id) {
+    return (
+      <div>Chargement...</div>
+    )
+  } 
 
+
+  const handleFurnished = (e) => {
+    setFurnished(e.target.value)
+  }
+
+  const handleOutside = (e) => {
+    setOutside(e.target.value)
+  }
+
+  const handleBasement = (e) => {
+    setBasement(e.target.value)
+  }
+
+  const handleCarPark = (e) => {
+    setCarPark(e.target.value)
+  }
 
 
   return (
@@ -94,33 +105,33 @@ export const EditPropertyPage = observer(() => {
         >
           {({ handleSubmit: handleSubmit2, submitting }) => (
             <Box component="form" onSubmit={handleSubmit2} noValidate sx={{ mt: 6 }}>
-              <div type="input" onChange={e => setTitle(e.target.value)}>
+
                 <Field
                   fullWidth
                   size="large"
                   component={RFTextField}
                   disabled={submitting}
                   required
+                  defaultValue={propertyStore.propertyDetails.attributes.title}
                   name="title"
                   autoComplete="title"
                   label="Titre de votre annonce"
                   margin="normal"
                 />
-              </div>
-              <div type="input" onChange={e => setPrice(e.target.value)}>
+              
                 <Field
                   fullWidth
                   size="large"
                   component={RFTextField}
                   disabled={submitting}
                   required
+                  defaultValue={propertyStore.propertyDetails.attributes.price.toString()}
                   name="price"
                   autoComplete="price"
                   label="Prix de votre bien"
                   margin="normal"
                 />
-              </div>              
-              <div type="input" onChange={e => setDescription(e.target.value)}>
+              
                 <Field
                   fullWidth
                   multiline
@@ -129,39 +140,39 @@ export const EditPropertyPage = observer(() => {
                   component={RFTextField}
                   disabled={submitting}
                   required
+                  defaultValue={propertyStore.propertyDetails.attributes.description}
                   name="description"
                   autoComplete="description"
                   label="Description"
                   margin="normal"
                 />
-              </div>
-              <div type="input" onChange={e => setAddress(e.target.value)}>
+              
                 <Field
                   fullWidth
                   size="large"
                   component={RFTextField}
                   disabled={submitting}
                   required
+                  defaultValue={propertyStore.propertyDetails.attributes.address}
                   name="address"
                   autoComplete="123 abc street"
                   label="Adresse du bien"
                   margin="normal"
                 />
-              </div>
-              <div type="input" onChange={e => setCity(e.target.value)}>
+              
                 <Field
                   fullWidth
                   size="large"
                   component={RFTextField}
                   disabled={submitting}
                   required
+                  defaultValue={propertyStore.propertyDetails.attributes.city}
                   name="city"
                   autoComplete="ville"
                   label="Ville de votre bien"
                   margin="normal"
                 />
-              </div>
-              <div type="input" onChange={e => setZipcode(e.target.value)}>
+
                 <Field
                   fullWidth
                   type="number"
@@ -169,13 +180,13 @@ export const EditPropertyPage = observer(() => {
                   component={RFTextField}
                   disabled={submitting}
                   required
+                  defaultValue={propertyStore.propertyDetails.attributes.zipcode.toString()}
                   name="zipcode"
                   autoComplete="75000"
                   label="Code postal"
                   margin="normal"
                 />
-              </div>
-              <div type="input" onChange={e => setAera(e.target.value)}>
+ 
                 <Field
                   fullWidth
                   type="number"
@@ -183,13 +194,13 @@ export const EditPropertyPage = observer(() => {
                   component={RFTextField}
                   disabled={submitting}
                   required
+                  defaultValue={propertyStore.propertyDetails.attributes.aera.toString()}
                   name="aera"
                   autoComplete="50"
                   label="Surface en m²"
                   margin="normal"
                 />
-              </div>
-              <div type="input" onChange={e => setRooms(e.target.value)}>
+
                 <Field
                   fullWidth
                   type="number"
@@ -197,18 +208,20 @@ export const EditPropertyPage = observer(() => {
                   component={RFTextField}
                   disabled={submitting}
                   required
+                  defaultValue={propertyStore.propertyDetails.attributes.rooms.toString()}
                   name="rooms"
                   autoComplete="4"
                   label="Nombre de pièces"
                   margin="normal"
                 />
-              </div>
-              <div type="input" onChange={e => setFurnished(e.target.value)}>
+ 
                 <TextField
                   select
                   fullWidth
                   size="medium"
                   variant="standard"
+                  onChange={handleFurnished}
+                  value={furnished ? furnished : propertyStore.propertyDetails.attributes.furnished}
                   name="furnished"
                   label="Meublé ?"
                   SelectProps={{
@@ -222,13 +235,14 @@ export const EditPropertyPage = observer(() => {
                     </option>
                   ))}
                 </TextField>
-              </div>
-              <div type="input" onChange={e => setCarPark(e.target.value)}>
+
                 <TextField
                   select
                   fullWidth
                   size="medium"
                   variant="standard"
+                  onChange={handleCarPark}
+                  value={carPark ? carPark : propertyStore.propertyDetails.attributes.car_park}
                   name="carPark"
                   label="Parking ?"
                   SelectProps={{
@@ -242,13 +256,14 @@ export const EditPropertyPage = observer(() => {
                     </option>
                   ))}
                 </TextField>
-              </div>
-              <div type="input" onChange={e => setOutside(e.target.value)}>
+
                 <TextField
                   select
                   fullWidth
                   size="medium"
                   variant="standard"
+                  onChange={handleOutside}
+                  value={outside ? outside : propertyStore.propertyDetails.attributes.has_outside}
                   name="outside"
                   label="Jardin/balcon/terrasse ?"
                   SelectProps={{
@@ -262,13 +277,14 @@ export const EditPropertyPage = observer(() => {
                     </option>
                   ))}
                 </TextField>
-              </div>
-              <div type="input" onChange={e => setBasement(e.target.value)}>
+
                 <TextField
                   select
                   fullWidth
                   size="medium"
                   variant="standard"
+                  onChange={handleBasement}
+                  value={basement ? basement : propertyStore.propertyDetails.attributes.basement}
                   name="basement"
                   label="Sous-sol ?"
                   SelectProps={{
@@ -282,7 +298,7 @@ export const EditPropertyPage = observer(() => {
                     </option>
                   ))}
                 </TextField>
-              </div>
+
             <FormSpy subscription={{ submitError: true }}>
                 {({ submitError }) =>
                   submitError ? (
@@ -308,86 +324,3 @@ export const EditPropertyPage = observer(() => {
     </React.Fragment>
   )
 })
-
-/* 
-  return (
-    <React.Fragment>
-      <AppForm>
-        <React.Fragment>
-          <Typography variant="h3" gutterBottom marked="center" align="center">
-            Modifier votre annonce
-          </Typography>          
-        </React.Fragment>
-        <Form
-          onSubmit={handleSubmit}
-          subscription={{ submitting: true }}
-//          validate={validate}
-        >
-          {({ handleSubmit: handleSubmit2, submitting }) => (
-            <Box component="form" onSubmit={handleSubmit2} noValidate sx={{ mt: 6 }}>
-              <div type="input" onChange={e => setTitle(e.target.value)}>
-                <Field
-                  fullWidth
-                  size="large"
-                  component={RFTextField}
-                  disabled={submitting}
-                  required
-                  name="title"
-                  autoComplete="title"
-                  label="Titre de votre annonce"
-                  margin="normal"
-                />
-              </div>
-              <div type="input" onChange={e => setPrice(e.target.value)}>
-                <Field
-                  fullWidth
-                  size="large"
-                  component={RFTextField}
-                  disabled={submitting}
-                  required
-                  name="price"
-                  autoComplete="price"
-                  label="Prix de votre bien"
-                  margin="normal"
-                />
-              </div>              
-              <div type="input" onChange={e => setDescription(e.target.value)}>
-                <Field
-                  fullWidth
-                  multiline
-                  rows={5}
-                  size="large"
-                  component={RFTextField}
-                  disabled={submitting}
-                  required
-                  name="description"
-                  autoComplete="description"
-                  label="Description"
-                  margin="normal"
-                />
-              </div>
-              <FormSpy subscription={{ submitError: true }}>
-                {({ submitError }) =>
-                  submitError ? (
-                    <FormFeedback error sx={{ mt: 2 }}>
-                      {submitError}
-                    </FormFeedback>
-                  ) : null
-                }
-              </FormSpy>
-              <FormButton
-                sx={{ mt: 3, mb: 2 }}
-                disabled={submitting}
-                size="large"
-                color="secondary"
-                fullWidth
-              >
-                {submitting ? 'En cours…' : "Confirmer"}
-              </FormButton>
-            </Box>
-          )}
-        </Form>
-      </AppForm>
-    </React.Fragment>
-  )
-}) */
