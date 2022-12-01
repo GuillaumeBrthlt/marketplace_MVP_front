@@ -21,20 +21,14 @@ import { useEffect } from "react";
 export const App = observer(() => {
   const userStore = useUserStore();
 
-  useEffect(() => {
-    return async () => {
-      try {
-        let localAuthToken = await localStorage.auth_token;
-        let cookieExists = localAuthToken !== "undefined" && localAuthToken !== null;
-        if (cookieExists) {
-          userStore.loginUserWithToken(localAuthToken);
-        }
-      } catch(error) {
-        console.log(error)
-      }
-    } 
-  })
 
+  let localAuthToken = localStorage.auth_token;
+  let cookieExists = localAuthToken !== "undefined" && localAuthToken !== null;
+  if (cookieExists) {
+    userStore.loginUserWithToken(localAuthToken);
+  }
+
+  
   function PrivateRoute({ component: Page }) {
     if (!userStore.authenticated) {
       return <Navigate to="/login" />;

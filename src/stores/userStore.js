@@ -114,6 +114,7 @@ export function createUserStore() {
             this.loading = false
             this.authenticated = true
             this.user = response.data.user;
+            console.log(this.user)
             this.auth_token = localStorage.getItem('auth_token');
             axios.defaults.headers.common["Authorization"] = this.auth_token
           })
