@@ -12,11 +12,10 @@ import RFTextField from '../components/form/RFTextField';
 import { PropertiesListOwner } from '../components/properties/PropertiesListOwner';
 import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
-import { useUserStore } from '../contexts/UserContext'
 import RFUploadField from '../components/form/RFUploadField';
-import Resizer from 'react-image-file-resizer'
 import TextField from '../components/textField';
 import './ProfilePage.css'
+import { imageResize } from '../components/modules/Resizer';
 
 export const ProfilePage = observer(() => {
   const [title, setTitle] = useState('')
@@ -60,6 +59,7 @@ export const ProfilePage = observer(() => {
     data.append("property[price]", price)
     data.append("property[description]", description)
     if (picture) {
+      console.log(picture)
       data.append("property[picture]", picture)
     }
     data.append("property[address]", address)
@@ -75,21 +75,16 @@ export const ProfilePage = observer(() => {
     navigate('/')
 	};
 
-  const resizeFile = (file) => new Promise(resolve => {
-    Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0,
-    uri => {
-      resolve(uri);
-    }, 'file' );
-  });
 
-  const handlePicture = async (event) => {
-    const file = event.target.files[0];
-    const resizedImage = await resizeFile(file);
-    setPicture(resizedImage)
+  const handlePicture = async (event) => {  
+    try {
+      const file = event.target.files[0];
+      const resized = await imageResize(file)
+      setPicture(resized)
+    } catch(error) {
+      console.log(error)
+    }
   }     
-
-
-
 
   const toggleForm = () => {
     var buttonForm = document.getElementById("form")
