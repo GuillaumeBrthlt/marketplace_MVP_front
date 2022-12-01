@@ -4,8 +4,8 @@ describe('loginPage', () => {
     cy.get('[name="email"]').should('exist')
   })
   it("Type data and submit form", () => {
-    const email = "christelle.gevaert32@gmail.com"
-    const password = "Valaug65"
+    const email = "testing@email.fr"
+    const password = "azerty"
     cy.get('[name="email"]')
     .type(email)
     cy.get('[name="password"]')

@@ -17,7 +17,7 @@ export default function NewPasswordPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
 
-  const BASE_URL = 'http://localhost:3000/'
+  const BASE_URL = 'https://dev-marketplace-api-immo.fly.dev/'
   const token = searchParams.get('reset_token')
 
   const validate = (values) => {
