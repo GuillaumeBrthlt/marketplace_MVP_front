@@ -1,7 +1,7 @@
 import { runInAction} from 'mobx'
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:3000/';
+const BASE_URL = 'https://dev-marketplace-api.fly.dev/';
 
 export function createPropertyStore() {
   return {
@@ -11,23 +11,26 @@ export function createPropertyStore() {
     sellers: [],
     propertyDetails: {
       id: null,
-      title: null,
-      description: null,
-      user_id: null,
-      address: null,
-      city: null,
-      zipcode: null,
-      aera: null,
-      rooms: null,
-      furnished: true,
-      car_park: true,
-      has_outside: true,
-      basement: true
+      attribute: {
+        title: null,
+        description: null,
+        user_id: null,
+        address: null,
+        city: null,
+        zipcode: null,
+        aera: null,
+        rooms: null,
+        furnished: true,
+        car_park: true,
+        has_outside: true,
+        basement: true
+      }
     },
     sellerDetails: {
       id: null,
       email: null,
     },
+    cities: null,
 
     async getProperties() {
       runInAction(() => {
@@ -41,6 +44,10 @@ export function createPropertyStore() {
           runInAction(() => {
             this.loading = false
             this.properties = data
+            let cities = []
+            data.map(property => cities.push(property.attributes.city))
+            let uniqueCities = [...new Set(cities)]
+            this.cities = uniqueCities
           })
         }    
       } catch(error) {
@@ -75,7 +82,7 @@ export function createPropertyStore() {
         this.hasErrors = false
       })
       let payload = propertyData
-      
+      console.log(payload)
       try {
         let response = await axios.post(`${BASE_URL}properties`, payload);
         if (response.status == 201) {

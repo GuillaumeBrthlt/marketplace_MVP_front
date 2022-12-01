@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import {useState} from 'react'
 import { Field, Form, FormSpy } from 'react-final-form';
 import Box from '@mui/material/Box';
+import Button from '../components/button';
 import {required} from '../components/form/validation'
 import AppForm from '../components/form/appForm'
 import Typography from '../components/typography';
@@ -11,10 +12,10 @@ import RFTextField from '../components/form/RFTextField';
 import { PropertiesListOwner } from '../components/properties/PropertiesListOwner';
 import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
-import { useUserStore } from '../contexts/UserContext'
 import RFUploadField from '../components/form/RFUploadField';
-import Resizer from 'react-image-file-resizer'
 import TextField from '../components/textField';
+import './ProfilePage.css'
+import { imageResize } from '../components/modules/Resizer';
 
 export const ProfilePage = observer(() => {
   const [title, setTitle] = useState('')
@@ -31,9 +32,8 @@ export const ProfilePage = observer(() => {
   const [carPark, setCarPark] = useState(true)
   const [outside, setOutside] = useState(true)
   const [basement, setBasement] = useState(true)
-  
-  const userStore = useUserStore()
   const navigate = useNavigate()
+
 
   const formOptions = [
     { value: true , name: 'Oui', code: 'true' },
@@ -59,6 +59,7 @@ export const ProfilePage = observer(() => {
     data.append("property[price]", price)
     data.append("property[description]", description)
     if (picture) {
+      console.log(picture)
       data.append("property[picture]", picture)
     }
     data.append("property[address]", address)
@@ -74,21 +75,28 @@ export const ProfilePage = observer(() => {
     navigate('/')
 	};
 
-  const resizeFile = (file) => new Promise(resolve => {
-    Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0,
-    uri => {
-      resolve(uri);
-    }, 'file' );
-  });
 
-  const handlePicture = async (event) => {
-    const file = event.target.files[0];
-    const resizedImage = await resizeFile(file);
-    setPicture(resizedImage)
+  const handlePicture = async (event) => {  
+    try {
+      const file = event.target.files[0];
+      const resized = await imageResize(file)
+      setPicture(resized)
+    } catch(error) {
+      console.log(error)
+    }
   }     
+
+  const toggleForm = () => {
+    var buttonForm = document.getElementById("form")
+    buttonForm.className.includes('hidden') ? buttonForm.classList.remove('hidden') : buttonForm.classList.add('hidden')
+  }
 
   return (
     <React.Fragment>
+      <Box style={{ display: "flex", justifyContent: "center" }}>
+        <Button sx={{mt: 5 }}  variant="contained"  onClick={toggleForm} id="button">Afficher / Cacher formulaire de création</Button>
+      </Box>
+        <div className="hidden" id="form">
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
@@ -156,7 +164,7 @@ export const ProfilePage = observer(() => {
                   margin="normal"
                 />
               </div>
-              <div type="input" onChange={e => setCity(e.target.value)}>
+              <div type="input" onChange={e => setCity(e.target.value.toUpperCase().split(' ').join('-'))}>
                 <Field
                   fullWidth
                   size="large"
@@ -325,7 +333,9 @@ export const ProfilePage = observer(() => {
           )}
         </Form>
       </AppForm>
-      <Typography mt={3} variant="h3" gutterBottom marked="center" align="center">
+      </div>
+
+      <Typography mt={3} variant="h3" gutterBottom marked="center" align="center" sx={{ mt: 3}}>
         La liste de vos annonces:
       </Typography>
         <PropertiesListOwner />   

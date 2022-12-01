@@ -6,14 +6,10 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { observer } from 'mobx-react-lite';
 
-export const PropertiesList = observer(() => {
-  const propertyStore = usePropertyStore()
+export function PropertiesList({properties}) {
 
-  useEffect(() => {
-    propertyStore.getProperties()
-  }, [])
 
-    const displayCards = propertyStore.properties.map((property) =>
+    const displayCards = properties.map((property) =>
       <Grid item xs={2} sm={4} md={4} key={property.id}>
         <PropertyCard property={property.attributes} />
       </Grid>
@@ -30,4 +26,4 @@ export const PropertiesList = observer(() => {
         </Grid>
       </Box>
     )
-})
+}
