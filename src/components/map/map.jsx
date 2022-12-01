@@ -1,8 +1,17 @@
 import React from 'react';
-import { MapContainer, TileLayer , Popup, useMap } from 'react-leaflet';
-import { Marker } from 'leaflet'
+import L from 'leaflet'
+import { MapContainer, TileLayer , Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './map.scss';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+iconUrl: icon,
+shadowUrl: iconShadow
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
 
 export default function GetMap({ coords, display_name }) {
   const { latitude, longitude } = coords;
@@ -21,6 +30,8 @@ export default function GetMap({ coords, display_name }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Marker position={[latitude, longitude]}>
+          <img src='assets/images/marker-icon.png' alt='marker'>
+          </img>
           <Popup>
             {display_name}
           </Popup>
