@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Field, Form, FormSpy } from 'react-final-form';
 import Box from '@mui/material/Box';
@@ -12,7 +12,7 @@ import FormFeedback from '../components/form/FormFeedback';
 import axios from 'axios';
 
 export default function ResetPasswordPage() {
-  const BASE_URL = 'http://localhost:3000/'
+  const BASE_URL = 'https://dev-marketplace-api-immo.fly.dev/'
   const [email, setEmail] = useState(null)
   const navigate = useNavigate()
 
