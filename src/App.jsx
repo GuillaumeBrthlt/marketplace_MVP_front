@@ -15,11 +15,8 @@ import { ProfilePage } from "./pages/ProfilePage";
 import { EditPropertyPage } from "./pages/EditPropertyPage";
 import AppFooter from "./components/header_footer/AppFooter";
 import { PropertyDetails } from "./pages/propertyDetails";
-import { useEffect } from "react";
 import { usePropertyStore } from "./contexts/PropertyContext";
 import { Grid } from "@mui/material";
-import TermsPage from "./components/header_footer/Terms";
-
 
 export const App = observer(() => {
   const userStore = useUserStore();
