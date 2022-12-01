@@ -33,8 +33,8 @@ export const Hero = observer(() => {
         variant="h5"
         sx={{ mb: 4, mt: { sx: 4, sm: 10 } }}
       >
-        Real immo accompagne les propriétaires pour faciliter la vente de vos biens immobiliers au travers de notre plateforme. Listez vos bien et trouvez celui de vos rêves en deux clics.
-        Ici, pas de frais d'agences ! Les acheteurs entrent directement en contact avec les vendeurs !
+        Chez Real Immo nous vous accompagnons, vendeurs et acheteurs, afin de faciliter la vente et l'acquisition de vos biens immobiliers au travers de notre plateforme. Listez vos bien et trouvez celui de vos rêves en deux clics!
+        Ici, pas de frais d'agences ! Les acheteurs entrent directement en contact avec les vendeurs. Inscrivez-vous gratuitement dès à présent !
       </Typography>
       <Link to='/register' style={{textDecoration: 'none'}}>
         <Button
