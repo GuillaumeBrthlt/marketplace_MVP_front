@@ -46,7 +46,8 @@ export function createPropertyStore() {
             this.properties = data
             let cities = []
             data.map(property => cities.push(property.attributes.city))
-            this.cities = cities
+            let uniqueCities = [...new Set(cities)]
+            this.cities = uniqueCities
           })
         }    
       } catch(error) {
