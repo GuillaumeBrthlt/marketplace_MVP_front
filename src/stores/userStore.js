@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 import { runInAction } from 'mobx'
 import axios from 'axios'
 
-const BASE_URL = 'https://dev-marketplace-api.fly.dev/';
+const BASE_URL = 'https://dev-marketplace-api-immo.fly.dev/';
 
 export function createUserStore() {
   return {
@@ -107,14 +107,14 @@ export function createUserStore() {
           Authorization: payload
         }
       };
-
       try {
         let response = await axios.get(`${BASE_URL}member-data`, config)
-        if (response.statusText === "OK") {
+        if (response.status === 200) {
           runInAction(() => {
             this.loading = false
             this.authenticated = true
             this.user = response.data.user;
+            console.log(this.user)
             this.auth_token = localStorage.getItem('auth_token');
             axios.defaults.headers.common["Authorization"] = this.auth_token
           })

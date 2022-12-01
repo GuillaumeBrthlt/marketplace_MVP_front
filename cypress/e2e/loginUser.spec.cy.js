@@ -1,7 +1,6 @@
 describe('loginPage', () => {
   it('should login the user', () => {
     cy.visit('https://marketplace-mvp-front.vercel.app/login')
-//    cy.get('[data-cy="connection-title"]').should('exist')
     cy.get('[name="email"]').should('exist')
   })
   it("Type data and submit form", () => {

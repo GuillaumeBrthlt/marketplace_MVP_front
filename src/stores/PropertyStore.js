@@ -1,7 +1,7 @@
 import { runInAction} from 'mobx'
 import axios from 'axios'
 
-const BASE_URL = 'https://dev-marketplace-api.fly.dev/';
+const BASE_URL = 'https://dev-marketplace-api-immo.fly.dev/';
 
 export function createPropertyStore() {
   return {
