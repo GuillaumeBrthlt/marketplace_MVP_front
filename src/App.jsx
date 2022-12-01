@@ -15,22 +15,25 @@ import { ProfilePage } from "./pages/ProfilePage";
 import { EditPropertyPage } from "./pages/EditPropertyPage";
 import AppFooter from "./components/header_footer/AppFooter";
 import { PropertyDetails } from "./pages/propertyDetails";
-import { usePropertyStore } from "./contexts/PropertyContext";
 import { Grid } from "@mui/material";
+import { useEffect } from "react";
 
 export const App = observer(() => {
   const userStore = useUserStore();
-  const propertyStore = usePropertyStore();
 
-  let localAuthToken = localStorage.auth_token;
-  let cookieExists = localAuthToken !== "undefined" && localAuthToken !== null;
-  if (cookieExists) {
-    const auth_token = localStorage.getItem("auth_token");
-    const authTokenExists = auth_token !== undefined && auth_token !== null;
-    if (authTokenExists) {
-      userStore.loginUserWithToken(auth_token);
-    }
-  }
+  useEffect(() => {
+    return async () => {
+      try {
+        let localAuthToken = await localStorage.auth_token;
+        let cookieExists = localAuthToken !== "undefined" && localAuthToken !== null;
+        if (cookieExists) {
+          userStore.loginUserWithToken(localAuthToken);
+        }
+      } catch(error) {
+        console.log(error)
+      }
+    } 
+  })
 
   function PrivateRoute({ component: Page }) {
     if (!userStore.authenticated) {
