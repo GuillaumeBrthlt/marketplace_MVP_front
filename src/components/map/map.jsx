@@ -1,7 +1,7 @@
 import React from 'react';
 import { MapContainer, TileLayer , Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import './map.css';
+import './map.scss';
 
 export default function GetMap({ coords, display_name }) {
   const { latitude, longitude } = coords;
