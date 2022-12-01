@@ -60,6 +60,7 @@ export const ProfilePage = observer(() => {
     data.append("property[price]", price)
     data.append("property[description]", description)
     if (picture) {
+      console.log(picture)
       data.append("property[picture]", picture)
     }
     data.append("property[address]", address)

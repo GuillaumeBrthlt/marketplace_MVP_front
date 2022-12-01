@@ -1,7 +1,7 @@
 import { runInAction} from 'mobx'
 import axios from 'axios'
 
-const BASE_URL = 'https://dev-marketplace-api.fly.dev/';
+const BASE_URL = 'http://localhost:3000/';
 
 export function createPropertyStore() {
   return {
@@ -82,7 +82,7 @@ export function createPropertyStore() {
         this.hasErrors = false
       })
       let payload = propertyData
-      
+      console.log(payload)
       try {
         let response = await axios.post(`${BASE_URL}properties`, payload);
         if (response.status == 201) {
