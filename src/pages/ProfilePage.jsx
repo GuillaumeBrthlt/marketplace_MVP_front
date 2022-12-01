@@ -12,11 +12,10 @@ import RFTextField from '../components/form/RFTextField';
 import { PropertiesListOwner } from '../components/properties/PropertiesListOwner';
 import FormButton from '../components/form/FormButton';
 import { usePropertyStore } from '../contexts/PropertyContext'
-import { useUserStore } from '../contexts/UserContext'
 import RFUploadField from '../components/form/RFUploadField';
-import Resizer from 'react-image-file-resizer'
 import TextField from '../components/textField';
 import './ProfilePage.css'
+import { imageResize } from '../components/modules/Resizer';
 
 export const ProfilePage = observer(() => {
   const [title, setTitle] = useState('')
@@ -76,17 +75,15 @@ export const ProfilePage = observer(() => {
     navigate('/')
 	};
 
-  const resizeFile = (file) => {
-    Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0,
-    uri => {
-      console.log(uri);
-    }, 'blob', 500, 500 );
-  };
 
   const handlePicture = async (event) => {  
-    const file = event.target.files[0];
-    const resizedImage = await resizeFile(file);
-    setPicture(resizedImage)
+    try {
+      const file = event.target.files[0];
+      const resized = await imageResize(file)
+      setPicture(resized)
+    } catch(error) {
+      console.log(error)
+    }
   }     
 
 
