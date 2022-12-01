@@ -30,50 +30,37 @@ const iconStyle = {
   },
 };
 
-const LANGUAGES = [
-  {
-    code: 'en-US',
-    name: 'English',
-  },
-  {
-    code: 'fr-FR',
-    name: 'Français',
-  },
-];
-
 export default function AppFooter() {
   return (
     <Typography
       component="footer"
       sx={{ display: 'flex', bgcolor: 'secondary.light' }}
     >
-      <Container sx={{ my: 8, display: 'flex' }}>
-        <Grid container spacing={5}>
+      <Container sx={{ my: 6, display: 'flex' }}>
+        <Grid container spacing={3}>
           <Grid item xs={6} sm={4} md={3}>
             <Grid
               container
               direction="column"
               justifyContent="flex-end"
               spacing={2}
-              sx={{ height: 120 }}
+              sx={{ height: 80 }}
             >
               <Grid item sx={{ display: 'flex', color: 'secondary.main' }}>
                 <Box component="a" href='mailto:devalamer15@gmail.com' sx={iconStyle}>
                   <img
-                    src="/public/assets/images/envelope.png"
+                    src="/assets/images/envelope.png"
                     alt="Email"
                   />
                 </Box>
                 <Box component="a" href="https://place-to-play.herokuapp.com/" sx={iconStyle}>
                   <img
-                    src="/public/assets/images/sound-button.png"
+                    src="/assets/images/sound-button.png"
                     alt="PlacetoPlay"
                   />
                 </Box>
               </Grid>
-              <Grid item>
-                <Copyright />
-              </Grid>
+              
             </Grid>
           </Grid>
           <Grid item xs={6} sm={4} md={2}>
@@ -86,6 +73,19 @@ export default function AppFooter() {
               </Box>
             </Box>
           </Grid>
+          <Grid item xs={6} sm={4} md={2}>
+            <Typography variant="h6" marked="left" gutterBottom>
+              Contact
+            </Typography>
+            <Box component="ul" sx={{ m: 0, listStyle: 'none', p: 0 }}>
+              <Box component="li" sx={{ py: 0.5 }}>
+                <Link href='mailto:devalamer15@gmail.com'>Nous écrire</Link>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Copyright />
         </Grid>
       </Container>
     </Typography>

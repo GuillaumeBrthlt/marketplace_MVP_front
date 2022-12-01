@@ -82,7 +82,7 @@ export function createPropertyStore() {
         this.hasErrors = false
       })
       let payload = propertyData
-      
+      console.log(payload)
       try {
         let response = await axios.post(`${BASE_URL}properties`, payload);
         if (response.status == 201) {
