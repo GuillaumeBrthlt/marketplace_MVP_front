@@ -20,7 +20,7 @@ export const RegisterPage = observer(() => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    userStore.authenticated ? navigate(-1) : '';
+    userStore.authenticated ? navigate('/dashboard') : '';
   }, [userStore.authenticated])
 
   const validate = (values) => {
@@ -59,11 +59,14 @@ export const RegisterPage = observer(() => {
       <Typography sx={userStore.hasErrors ? '' : {display: 'none'}} align='center' color="red">
         Email ou mot de passe invalide.
       </Typography>
-      <AppForm>
+      <AppForm >
         <React.Fragment>
-          <Typography variant="h3" gutterBottom marked="center" align="center">
+          <div data-cy="connection-title">
+          <Typography variant="h3" gutterBottom marked="center" align="center" >
             S'enregistrer
           </Typography>
+          </div>
+
           <Typography variant="body2" align="center">
             {'Déja membre ? '}
             <Link
@@ -108,6 +111,7 @@ export const RegisterPage = observer(() => {
                   label="Mot de passe"
                   type="password"
                   margin="normal"
+                  data-cy="password"
                 />
               </div>
               <div type="input" onChange={e => setPasswordConfirmation(e.target.value)}>
@@ -139,6 +143,7 @@ export const RegisterPage = observer(() => {
                 size="large"
                 color="secondary"
                 fullWidth
+                data-cy="signInBtn"
               >
                 {submitting ? 'En cours…' : "S'inscrire"}
               </FormButton>
