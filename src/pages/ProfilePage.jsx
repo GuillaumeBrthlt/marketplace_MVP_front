@@ -76,12 +76,12 @@ export const ProfilePage = observer(() => {
     navigate('/')
 	};
 
-  const resizeFile = (file) => new Promise(resolve => {
+  const resizeFile = (file) {
     Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0,
     uri => {
-      resolve(uri);
-    }, 'blob' );
-  });
+      console.log(uri);
+    }, 'blob', 500, 500 );
+  };
 
   const handlePicture = async (event) => {
     const file = event.target.files[0];
