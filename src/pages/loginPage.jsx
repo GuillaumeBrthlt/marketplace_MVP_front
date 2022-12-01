@@ -115,6 +115,8 @@ export const LoginPage = observer(() => {
                 size="large"
                 color="secondary"
                 fullWidth
+                data-cy="signInBtn"
+
               >
                 {submitting ? 'En cours…' : "Se connecter"}
               </FormButton>
