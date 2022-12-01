@@ -86,9 +86,6 @@ export const ProfilePage = observer(() => {
     }
   }     
 
-
-
-
   const toggleForm = () => {
     var buttonForm = document.getElementById("form")
     buttonForm.className.includes('hidden') ? buttonForm.classList.remove('hidden') : buttonForm.classList.add('hidden')
