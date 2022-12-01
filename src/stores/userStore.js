@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 import { runInAction } from 'mobx'
 import axios from 'axios'
 
-const BASE_URL = 'https://dev-marketplace-api.fly.dev/';
+const BASE_URL = 'https://dev-marketplace-api-immo.fly.dev/';
 
 export function createUserStore() {
   return {
