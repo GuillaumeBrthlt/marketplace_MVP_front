@@ -1,6 +1,6 @@
 describe('registerPage', () => {
   it('Should register the user', () => {
-    cy.visit('http://127.0.0.1:5173/register')
+    cy.visit('https://marketplace-mvp-front.vercel.app/register')
     cy.get('[name="email"]').should('exist')
   })
   it("Type data and submit form", () => {
@@ -13,6 +13,6 @@ describe('registerPage', () => {
     cy.get('[name="password-confirmation"]')
     .type(password)
     cy.get('[data-cy="signInBtn"]').click()
-    cy.url().should('eq', 'http://127.0.0.1:5173/dashboard')
+    cy.url().should('eq', 'https://marketplace-mvp-front.vercel.app/dashboard')
   })
 })
