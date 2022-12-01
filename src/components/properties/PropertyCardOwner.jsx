@@ -7,18 +7,8 @@ import Button from '../button';
 import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePropertyStore } from '../../contexts/PropertyContext';
-import { useUserStore } from '../../contexts/UserContext';
-import { CardMedia } from '@mui/material';
+import { CardMedia, Grid } from '@mui/material';
 
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    
-  </Box>
-);
 
 export default function PropertyCard({ property }) {
   
@@ -26,7 +16,6 @@ export default function PropertyCard({ property }) {
   const linkToEdit = `/property/edit/${property.id}`
   const idThisProperty = property.id
   const propertyStore = usePropertyStore()
-  const userStore = useUserStore()
   const navigate = useNavigate()
 
 
@@ -38,55 +27,56 @@ export default function PropertyCard({ property }) {
   }
 
 
-  if(property.user_id == userStore.user.id) {
-      return (
+  const formatter = new Intl.NumberFormat('fr-FR', {
+    style: 'currency',
+    currency: 'EUR',
+  });
+
+  const price = formatter.format(property.price)
+
+
+  return (
     <Card sx={{ minWidth: 275 }}>
-      <CardMedia
+       <CardMedia
           component='img'
           height='300'
           image={property.picture_url ? property.picture_url : 'assets/properties/default.jpg'} 
         />
-      <CardContent>
-        <Typography variant="h5" component="div">
-          {property.title}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {property.price} €
-        </Typography>
-        <Typography variant="body2">
-          {property.description}
-        </Typography>
-      </CardContent>
+        <CardContent>
+          <Grid display='flex' justifyContent='space-between' flexWrap='wrap'>
+            <Grid>
+              <Typography variant="h5" component="div" fontWeight='bold'>
+                {property.title}
+              </Typography>
+              <Typography variant="h5" component="div">
+                {property.city} ({property.zipcode.toString().slice(0, 2)})
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary" >
+                {price}
+              </Typography>
+            </Grid>
+            <Grid>
+              <Typography variant="body2">
+                {property.aera} m²
+              </Typography>
+            </Grid>
+          </Grid>
+        </CardContent>
       <CardActions>
-        <Link to={linkToDetails}>
-          <Button size="small">En savoir plus</Button>
-        </Link>
-        <Link to={linkToEdit}>
-          <Button variant="contained">Modifier</Button>
-        </Link>
-          <Button variant="outlined" onClick={deleteThisProperty}>Supprimer</Button>
+        <Grid display='flex' flexWrap='wrap'>
+          <Grid width='100%' textAlign='center' mb={2}>
+            <Link to={linkToDetails}>
+              <Button size="small">En savoir plus</Button>
+            </Link>
+          </Grid>
+          <Grid display='flex' justifyContent='center' width='100%'>
+            <Link to={linkToEdit}>
+              <Button variant="contained">Modifier</Button>
+            </Link>
+            <Button variant="outlined" onClick={deleteThisProperty}>Supprimer</Button>
+          </Grid>
+        </Grid>
       </CardActions>
     </Card>
-  )
-  }
-  return (
-    <Card sx={{ minWidth: 275 }}>
-    <CardContent>
-      <Typography variant="h5" component="div">
-        {property.title}
-      </Typography>
-      <Typography sx={{ mb: 1.5 }} color="text.secondary">
-        {property.price} €
-      </Typography>
-      <Typography variant="body2">
-        {property.description}
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Link to={linkToDetails}>
-        <Button size="small">En savoir plus</Button>
-      </Link>
-    </CardActions>
-  </Card>
   )
 }
