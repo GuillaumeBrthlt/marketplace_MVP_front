@@ -107,10 +107,9 @@ export function createUserStore() {
           Authorization: payload
         }
       };
-
       try {
         let response = await axios.get(`${BASE_URL}member-data`, config)
-        if (response.statusText === "OK") {
+        if (response.status === 200) {
           runInAction(() => {
             this.loading = false
             this.authenticated = true
