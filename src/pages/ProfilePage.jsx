@@ -80,7 +80,7 @@ export const ProfilePage = observer(() => {
     Resizer.imageFileResizer(file, 500, 500, 'JPEG', 100, 0,
     uri => {
       resolve(uri);
-    }, 'file' );
+    }, 'blob' );
   });
 
   const handlePicture = async (event) => {
